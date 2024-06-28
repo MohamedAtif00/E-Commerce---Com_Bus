@@ -8,16 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.3.0" />
+    <Compile Remove="Abstraction\**" />
+    <EmbeddedResource Remove="Abstraction\**" />
+    <None Remove="Abstraction\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\CategoryAggre\" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\ProductAggre\Events\" />
     <Folder Include="Model\ReviewAggre\" />
-    <Folder Include="Model\OrderAggre\" />
-    <Folder Include="Model\SuperCategoryAggre\" />
     <Folder Include="Model\UserAggre\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\E-Commerce.SharedKernal.Domain\E-Commerce.SharedKernal.Domain.csproj" />
   </ItemGroup>
 
 </Project>

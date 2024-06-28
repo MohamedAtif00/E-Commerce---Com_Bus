@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Domain.Abstraction
+namespace E_Commerce.SharedKernal.Domain
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IBusinessRule
     {
-        public 
-
-        Task<int> save();
+        bool IsBroken();
+        string Message { get; }
     }
 }

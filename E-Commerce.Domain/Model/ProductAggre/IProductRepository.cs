@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Domain.Model.ProductAggre
 {
-    public class Brand : Entity<BrandId>
+    public interface IProductRepository : IGenericRepository<Product,ProductId>
     {
-        private Brand(BrandId id) : base(id)
-        {
-        }
-
-        public string _name { get;private set; }
-
     }
 }

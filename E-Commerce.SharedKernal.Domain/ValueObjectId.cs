@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Domain.Abstraction
+namespace E_Commerce.SharedKernal.Domain
 {
-    public abstract class ValueObjectId:ValueObject
+    public abstract class ValueObjectId : ValueObject
     {
-        public Guid value { get;private  set; }
+        public Guid value { get; private set; }
 
-        protected  ValueObjectId(Guid id)
+        protected ValueObjectId(Guid id)
         {
             value = id;
         }
 
-            
+
 
         public override IEnumerable<object> GetEqualityComponents()
         {

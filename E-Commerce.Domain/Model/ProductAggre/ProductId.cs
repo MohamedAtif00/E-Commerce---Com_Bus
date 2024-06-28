@@ -1,10 +1,12 @@
-﻿using E_Commerce.Domain.Abstraction;
+﻿using E_Commerce.Domain.Model.ProductAggre.Converters;
+using E_Commerce.SharedKernal.Domain;
 
 namespace E_Commerce.Domain.Model.ProductAggre
 {
-    public class ProductId : ValueObjectId,IValueObjectId<ProductId>
+    [EfCoreValueConverterAttribute(typeof(ValueConverter.ProductIdValueConverter))]
+    public  class ProductId : ValueObjectId,IValueObjectId<ProductId>
     {
-        protected ProductId(Guid id) : base(id)
+        public ProductId(Guid id) : base(id)
         {
         }
 
@@ -19,4 +21,6 @@ namespace E_Commerce.Domain.Model.ProductAggre
             return new(Guid.NewGuid());
         }
     }
+
+
 }

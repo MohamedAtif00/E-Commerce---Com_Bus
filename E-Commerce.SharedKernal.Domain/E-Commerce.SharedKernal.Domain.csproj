@@ -2,17 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>E_Commerce.Application</RootNamespace>
+    <RootNamespace>E_Commerce.SharedKernal.Domain</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="8.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\E-Commerce.Domain\E-Commerce.Domain.csproj" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
   </ItemGroup>
 
 </Project>

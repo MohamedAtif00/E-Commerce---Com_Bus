@@ -1,4 +1,4 @@
-﻿using E_Commerce.Domain.Abstraction;
+﻿using E_Commerce.SharedKernal.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
