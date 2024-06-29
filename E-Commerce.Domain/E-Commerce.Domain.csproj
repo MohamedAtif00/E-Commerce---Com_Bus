@@ -20,8 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Model\ProductAggre\Events\" />
-    <Folder Include="Model\ReviewAggre\" />
-    <Folder Include="Model\UserAggre\" />
   </ItemGroup>
 
   <ItemGroup>

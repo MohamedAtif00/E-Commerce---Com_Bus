@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Domain.Model.ProductAggre
+namespace E_Commerce.Domain.Model.CustomerAggre
 {
-    public interface IProductRepository : IGenericRepository<Product,ProductId>
+    public interface ICustomerRepository :IGenericRepository<Customer,CustomerId>
     {
     }
 }

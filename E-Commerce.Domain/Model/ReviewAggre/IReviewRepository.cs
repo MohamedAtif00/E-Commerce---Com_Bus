@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Domain.Model.ProductAggre
+namespace E_Commerce.Domain.Model.ReviewAggre
 {
-    public interface IProductRepository : IGenericRepository<Product,ProductId>
+    public interface IReviewRepository :IGenericRepository<Review,ReviewId>
     {
     }
 }

@@ -1,5 +1,5 @@
-﻿using E_Commerce.Domain.Abstraction;
-using E_Commerce.Infrastructure.Data;
+﻿using E_Commerce.Infrastructure.Data;
+using E_Commerce.SharedKernal.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

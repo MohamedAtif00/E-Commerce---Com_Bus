@@ -2,18 +2,18 @@
 
 namespace E_Commerce.Domain.Model.OrderAggre
 {
-    public class OrderId : ValueObjectId, IValueObjectId<OrderId>
+    public class OrderItemId : ValueObjectId, IValueObjectId<OrderItemId>
     {
-        public OrderId(Guid id) : base(id)
+        public OrderItemId(Guid id) : base(id)
         {
         }
 
-        public static OrderId Create(Guid value)
+        public static OrderItemId Create(Guid value)
         {
             return new(value);
         }
 
-        public static OrderId CreateUnique()
+        public static OrderItemId CreateUnique()
         {
             return new(Guid.NewGuid());
         }

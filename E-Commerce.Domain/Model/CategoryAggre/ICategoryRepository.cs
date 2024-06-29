@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Domain.Model.ProductAggre
+namespace E_Commerce.Domain.Model.CategoryAggre
 {
-    public interface IProductRepository : IGenericRepository<Product,ProductId>
+    public interface ICategoryRepository : IGenericRepository<Category,CategoryId>
     {
     }
 }

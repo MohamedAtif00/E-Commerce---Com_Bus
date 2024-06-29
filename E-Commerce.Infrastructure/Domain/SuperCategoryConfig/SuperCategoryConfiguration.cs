@@ -1,4 +1,4 @@
-﻿using E_Commerce.Domain.Model.ProductAggre;
+﻿using E_Commerce.Domain.Model.SuperCategoryAggre;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Infrastructure.Domain.product
+namespace E_Commerce.Infrastructure.Domain.SuperCategoryConfig
 {
-    public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
+    public class SuperCategoryConfiguration : IEntityTypeConfiguration<SuperCategory>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<SuperCategory> builder)
         {
             throw new NotImplementedException();
         }

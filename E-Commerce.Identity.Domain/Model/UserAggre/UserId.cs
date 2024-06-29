@@ -1,8 +1,8 @@
 ﻿using E_Commerce.SharedKernal.Domain;
 
-namespace E_Commerce.Identity.Domain.Model
+namespace E_Commerce.Identity.Domain.Model.UserAggre
 {
-    public class UserId : ValueObjectId ,IValueObjectId<UserId>,IEquatable<UserId>
+    public class UserId : ValueObjectId, IValueObjectId<UserId>
     {
         public UserId(Guid id) : base(id)
         {
@@ -16,14 +16,6 @@ namespace E_Commerce.Identity.Domain.Model
         public static UserId CreateUnique()
         {
             return new(Guid.NewGuid());
-        }
-
-        public bool Equals(UserId? other)
-        {
-            if (other is null)
-                return false;
-
-            return value.Equals(other.value);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using E_Commerce.Domain.Abstraction;
+﻿
+
+using E_Commerce.SharedKernal.Domain;
 
 namespace E_Commerce.Domain.Model.ProductOptionAggre
 {
