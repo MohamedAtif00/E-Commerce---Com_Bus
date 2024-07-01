@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.SpecificationAggre;
+﻿using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Domain.Model.SpecificationAggre;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -13,7 +14,10 @@ namespace E_Commerce.Infrastructure.Domain.SpecificationConfig
     {
         public void Configure(EntityTypeBuilder<Specification> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).HasConversion(x=>x.value,x =>SpecificationId.Create(x));
+            builder.Property(x => x.CategoryId).HasConversion(x =>x.value,x =>CategoryId.Create(x));
+
         }
     }
 }

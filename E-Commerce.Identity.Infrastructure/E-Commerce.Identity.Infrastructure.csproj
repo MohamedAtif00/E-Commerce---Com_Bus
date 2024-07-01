@@ -15,4 +15,8 @@
     <ProjectReference Include="..\E-Commerce.Identity.Application\E-Commerce.Identity.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\" />
+  </ItemGroup>
+
 </Project>

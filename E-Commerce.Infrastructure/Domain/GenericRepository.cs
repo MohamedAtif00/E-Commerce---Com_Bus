@@ -46,5 +46,10 @@ namespace E_Commerce.Infrastructure.Domain
             var entry =_context.Set<T>().Update(entity);
             return entry.Entity;
         }
+
+        public async Task<int> save() 
+        {
+           return await _context.SaveChangesAsync();
+        }
     }
 }

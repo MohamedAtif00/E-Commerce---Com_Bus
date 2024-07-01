@@ -8,7 +8,7 @@ namespace E_Commerce.SharedKernal.Domain
 {
     public interface IUnitOfWork : IDisposable
     {
-        public
+        
 
         Task<int> save();
     }

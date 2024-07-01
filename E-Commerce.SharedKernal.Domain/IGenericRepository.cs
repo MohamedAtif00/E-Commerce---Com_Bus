@@ -13,5 +13,6 @@ namespace E_Commerce.SharedKernal.Domain
         Task<T> Add(T entity);
         Task Delete(T entity);
         Task<T> Update(T entity);
+        Task<int> save();
     }
 }

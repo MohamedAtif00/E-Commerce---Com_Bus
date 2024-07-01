@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Domain.Model.SuperCategoryAggre;
+using E_Commerce.Domain.Model.SuperCategoryAggre.Converter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -13,7 +14,8 @@ namespace E_Commerce.Infrastructure.Domain.SuperCategoryConfig
     {
         public void Configure(EntityTypeBuilder<SuperCategory> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).HasConversion(new SuperCategoryConverter.SuperCategoryIdValueConverter());
         }
     }
 }

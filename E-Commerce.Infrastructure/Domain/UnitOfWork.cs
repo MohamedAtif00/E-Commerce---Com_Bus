@@ -1,6 +1,6 @@
-﻿using E_Commerce.Domain.Abstraction;
-using E_Commerce.Domain.Model.ProductAggre;
+﻿using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.Infrastructure.Data;
+using E_Commerce.SharedKernal.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,12 @@ namespace E_Commerce.Infrastructure.Domain
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationContext _context;
+
+        public UnitOfWork(ApplicationContext context, IProductRepository productRepository)
+        {
+            _context = context;
+            ProductRepository = productRepository;
+        }
 
         public IProductRepository ProductRepository { get; set; }
 

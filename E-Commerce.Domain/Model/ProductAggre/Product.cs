@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Domain.Model.ProductAggre.Rules;
 using E_Commerce.SharedKernal.Domain;
+using System.Diagnostics;
 
 
 namespace E_Commerce.Domain.Model.ProductAggre
@@ -18,6 +19,15 @@ namespace E_Commerce.Domain.Model.ProductAggre
             _stockQuantity = stockQuantity;
         }
 
+        private Product(ProductId id,
+                        string name,
+                        string description,
+                        int stockQuantity):base(id)
+        {
+            _name = name;
+            _description = description;
+            _stockQuantity = stockQuantity;
+        }
 
 
         public string _name { get; private set; }
@@ -36,14 +46,12 @@ namespace E_Commerce.Domain.Model.ProductAggre
             return new(ProductId.CreateUnique(),name,description,price,stockQuantity);
         }
 
-        public void Update(string name,
+        public void UpdateDetails(string name,
                             string description,
-                            Price price,
                             int stockQuantity)
         {
             _name = name;
             _description = description;
-            _price = price;
             _stockQuantity = stockQuantity;
         }
 

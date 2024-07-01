@@ -7,20 +7,20 @@ namespace E_Commerce.Domain.Model.ProductAggre
 {
     public class Price : ValueObject
     {
-        public int _discount { get; }
+        public int? _discount { get; private set; }
         public decimal _price { get; private set; }
         public decimal? _total { get; private set; }
 
-        private Price(decimal price, int discount = 0)
+        private Price(decimal price, int? discount)
         {
             // Check group of rules
-            CheckRule(new DiscountCannotBeNegativeRule(discount));
+            CheckRule(new DiscountCannotBeNegativeRule(discount ?? 0));
             CheckRule(new PriceCannotBeZeroOrNegativeRule(price));
 
             // Assigning values
             _discount = discount;
             _price = price;
-            _total = CalculateTotal(price, discount);
+            _total = CalculateTotal(price, discount??0);
         }
 
         public static Price Create(decimal price, int discount = 0)
@@ -31,7 +31,7 @@ namespace E_Commerce.Domain.Model.ProductAggre
         public static Price Percentage(int percentage)
         {
             CheckRule(new PercentageMustBeBetween0And100Rule(percentage));
-            return new Price(percentage / 100m);
+            return new Price(percentage / 100m,null);
         }
 
         private static decimal? CalculateTotal(decimal price, int discount)

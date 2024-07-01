@@ -1,9 +1,13 @@
 ﻿using E_Commerce.Domain.Model.ProductAggre.Converters;
 using E_Commerce.SharedKernal.Domain;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace E_Commerce.Domain.Model.ProductAggre
 {
-    [EfCoreValueConverterAttribute(typeof(ValueConverter.ProductIdValueConverter))]
+    [EfCoreValueConverter(typeof(ProductConverter.ProductIdValueConverter))]
+    [JsonConverter(typeof(ProductConverter.ProductIdJsonConverter))]
+    [TypeConverter(typeof(ProductConverter.ProductIdTypeConverter))]
     public  class ProductId : ValueObjectId,IValueObjectId<ProductId>
     {
         public ProductId(Guid id) : base(id)
@@ -20,6 +24,8 @@ namespace E_Commerce.Domain.Model.ProductAggre
         {
             return new(Guid.NewGuid());
         }
+
+
     }
 
 

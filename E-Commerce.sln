@@ -13,21 +13,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Domain", "E-Comm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{052CBAD3-BB28-40A4-AC5C-9781399B4478}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Identity.Domain", "E-Commerce.Identity.Domain\E-Commerce.Identity.Domain.csproj", "{266F4AE2-F963-45A1-8AA0-3B530949E1E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Identity.Domain", "E-Commerce.Identity.Domain\E-Commerce.Identity.Domain.csproj", "{266F4AE2-F963-45A1-8AA0-3B530949E1E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{4BE53491-A877-42E0-9014-EF49F6D181FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernal", "SharedKernal", "{3E13E1C0-87F1-4B63-9F57-011095AE4D57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.SharedKernal.Domain", "E-Commerce.SharedKernal.Domain\E-Commerce.SharedKernal.Domain.csproj", "{A1054F02-6FC9-4367-81CF-7EF95F800779}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.SharedKernal.Domain", "E-Commerce.SharedKernal.Domain\E-Commerce.SharedKernal.Domain.csproj", "{A1054F02-6FC9-4367-81CF-7EF95F800779}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B5D05C40-DFDC-4D63-B92E-812DE7869540}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Identity.Infrastructure", "E-Commerce.Identity.Infrastructure\E-Commerce.Identity.Infrastructure.csproj", "{9FD74496-8D03-40A3-AA12-2E675930A0A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Identity.Infrastructure", "E-Commerce.Identity.Infrastructure\E-Commerce.Identity.Infrastructure.csproj", "{9FD74496-8D03-40A3-AA12-2E675930A0A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{6D86E528-F460-45D2-BB69-E04A36AB153E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Identity.Application", "E-Commerce.Identity.Application\E-Commerce.Identity.Application.csproj", "{E41A66F2-AC7C-4CCC-B3C7-AA7E0B020B17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Identity.Application", "E-Commerce.Identity.Application\E-Commerce.Identity.Application.csproj", "{E41A66F2-AC7C-4CCC-B3C7-AA7E0B020B17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.SharedKernal.Infrastructure", "E-Commerce.SharedKernal.Infrastructure\E-Commerce.SharedKernal.Infrastructure.csproj", "{BA802691-8A76-4969-B4D6-59D9D3F2E4C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.SharedKernal.Application", "E-Commerce.SharedKernal.Application\E-Commerce.SharedKernal.Application.csproj", "{18050C53-2288-4325-B04E-C40B50B9CF8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +71,14 @@ Global
 		{E41A66F2-AC7C-4CCC-B3C7-AA7E0B020B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E41A66F2-AC7C-4CCC-B3C7-AA7E0B020B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E41A66F2-AC7C-4CCC-B3C7-AA7E0B020B17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA802691-8A76-4969-B4D6-59D9D3F2E4C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA802691-8A76-4969-B4D6-59D9D3F2E4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA802691-8A76-4969-B4D6-59D9D3F2E4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA802691-8A76-4969-B4D6-59D9D3F2E4C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18050C53-2288-4325-B04E-C40B50B9CF8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18050C53-2288-4325-B04E-C40B50B9CF8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18050C53-2288-4325-B04E-C40B50B9CF8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18050C53-2288-4325-B04E-C40B50B9CF8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +94,8 @@ Global
 		{9FD74496-8D03-40A3-AA12-2E675930A0A2} = {B5D05C40-DFDC-4D63-B92E-812DE7869540}
 		{6D86E528-F460-45D2-BB69-E04A36AB153E} = {4BE53491-A877-42E0-9014-EF49F6D181FC}
 		{E41A66F2-AC7C-4CCC-B3C7-AA7E0B020B17} = {6D86E528-F460-45D2-BB69-E04A36AB153E}
+		{BA802691-8A76-4969-B4D6-59D9D3F2E4C1} = {3E13E1C0-87F1-4B63-9F57-011095AE4D57}
+		{18050C53-2288-4325-B04E-C40B50B9CF8C} = {3E13E1C0-87F1-4B63-9F57-011095AE4D57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D737F6AE-0249-44FF-9C2E-A5F48FDE8CFB}

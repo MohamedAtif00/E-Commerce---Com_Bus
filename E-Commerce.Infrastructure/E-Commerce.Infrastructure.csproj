@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\E-Commerce.Application\E-Commerce.Application.csproj" />
+    <ProjectReference Include="..\E-Commerce.SharedKernal.Infrastructure\E-Commerce.SharedKernal.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

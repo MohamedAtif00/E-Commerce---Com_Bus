@@ -28,6 +28,7 @@ namespace E_Commerce.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
     }

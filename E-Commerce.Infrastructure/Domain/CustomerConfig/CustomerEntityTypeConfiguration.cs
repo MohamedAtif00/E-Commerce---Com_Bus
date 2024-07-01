@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.CustomerAggre;
+﻿
+using E_Commerce.Domain.Model.CustomerAggre;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Infrastructure.Domain.CustomerConfig
 {
-    internal class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer>
+    public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer>
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).HasConversion(x=>x.value,x =>CustomerId.Create(x));
         }
     }
 }

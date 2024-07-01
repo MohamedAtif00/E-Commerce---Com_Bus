@@ -36,6 +36,9 @@ namespace E_Commerce.SharedKernal.Domain
             _domainEvents.Add(domainEvents);
         }
 
+        public List<IDomainEvents> GetDomainEvents() => _domainEvents.ToList();
+        
+
         public void ClearDomainEvents()
         {
             _domainEvents.Clear();
