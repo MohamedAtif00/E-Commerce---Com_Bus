@@ -1,4 +1,6 @@
 ﻿using Ardalis.Result;
+using E_Commerce.Application.Helper;
+using E_Commerce.Domain.Common;
 using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Application;
 using System;
@@ -9,26 +11,27 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.ProductQuery.GetAllProducts
 {
-    public class GetAllProductsQueryHandler : IQueryHandler<GetAllProductsQuery, List<Product>>
+    public class GetAllProductsQueryHandler : IQueryHandler<GetAllProductsQuery, PageList<Product>>
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetAllProductsQueryHandler(IProductRepository productRepository)
+        public GetAllProductsQueryHandler(IUnitOfWork unitOfWork)
         {
-            _productRepository = productRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<List<Product>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PageList<Product>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var products = await _productRepository.GetAll();
+                var productsQuery = await _unitOfWork.ProductRepository.GetPages();
+                var pages = await PageList<Product>.CreateAsync(productsQuery,request.pageNumber,request.pageSize); 
 
-                return Result.Success(products.ToList());
+                return Result.Success(pages);
             }
             catch (Exception ex)
             {
-                return Result.Error("system error");
+                return Result.Error(ex.Message);
             }
         }
     }

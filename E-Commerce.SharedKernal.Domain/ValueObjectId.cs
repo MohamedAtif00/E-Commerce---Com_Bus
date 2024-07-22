@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace E_Commerce.SharedKernal.Domain
 {
-    public abstract class ValueObjectId : ValueObject
+    public abstract class ValueObjectId : ValueObject,IId
     {
-        public Guid value { get; private set; }
+        public Guid value { get;  set; }
 
         protected ValueObjectId(Guid id)
         {
@@ -22,4 +23,7 @@ namespace E_Commerce.SharedKernal.Domain
             yield return value;
         }
     }
+
+    public interface IId
+    { }
 }

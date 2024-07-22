@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.ProductAggre;
+﻿using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.Domain.Model.ProductAggre.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,8 +16,10 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(x => x.Id);
-
+            
             builder.Property(x => x.Id).HasConversion(x =>x.value,x =>ProductId.Create(x));
+            builder.Property(x => x.categoryId).HasConversion(x =>x.value,value => CategoryId.Create(value));
+          
 
 
             builder.Property(x => x._name)
@@ -26,6 +29,10 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
             builder.Property(x => x._description)
                 .IsRequired()
                 .HasMaxLength(500); // Example: Set maximum length for description
+
+
+            builder.Property<uint>("Version").IsRowVersion();
+
 
             // Configure Price value object
             builder.ComplexProperty(
@@ -55,10 +62,15 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
                 .IsRequired()
                 .HasDefaultValue(DateTime.Now); // Example: Set default value for created date
 
-            builder.Property(x => x._UpdatedAt)
-                .IsRequired();
 
             // Optional: Configure other entity relationships, indexes, etc.
+            builder.OwnsMany(x => x.images, config => 
+            {
+                config.WithOwner(x => x.Product).HasForeignKey(x =>x.ProductId);
+
+                config.HasKey(x =>x.Id);
+                config.Property(x => x.Id).HasConversion(x =>x.value ,value =>ImageId.Create(value)); ;
+            });
         }
     }
 }

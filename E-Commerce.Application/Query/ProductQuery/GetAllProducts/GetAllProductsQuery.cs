@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.ProductAggre;
+﻿using E_Commerce.Application.Helper;
+using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Application;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.ProductQuery.GetAllProducts
 {
-    public class GetAllProductsQuery():IQuery<List<Product>>;
+    public record GetAllProductsQuery(int pageNumber,int pageSize):IQuery<PageList<Product>>;
     
     
 }

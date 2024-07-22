@@ -15,39 +15,42 @@ namespace E_Commerce.Infrastructure.Domain
     {
         public readonly ApplicationContext _context;
 
-        public GenericRepository(ApplicationContext context)
+        protected GenericRepository(ApplicationContext context)
         {
             _context = context;
         }
 
-        public async Task<T> Add(T entity)
+        public virtual async Task<T> Add(T entity)
         {
             var res = await _context.Set<T>().AddAsync(entity);
             return entity;
         }
 
-        public async Task Delete(T entity)
+        public virtual async Task Delete(T entity)
         {
              _context.Set<T>().Remove(entity);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<List<T>> GetAll()
         {
             return await _context.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public async Task<T> GetById(Tkey id)
+        public virtual async Task<T> GetById(Tkey id,bool withTracking = false)
         {
-            return await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(e => EF.Property<Tkey>(e, nameof(Entity<Tkey>.Id))!.Equals(id)) ?? null;
+            return withTracking?
+                await _context.Set<T>().FirstOrDefaultAsync(e => EF.Property<Tkey>(e, nameof(Entity<Tkey>.Id))!.Equals(id)) ?? null
+                : await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(e => EF.Property<Tkey>(e, nameof(Entity<Tkey>.Id))!.Equals(id)) ?? null;
+
         }
 
-        public async Task<T> Update(T entity)
+        public virtual async Task<T> Update(T entity)
         {
             var entry =_context.Set<T>().Update(entity);
             return entry.Entity;
         }
 
-        public async Task<int> save() 
+        public virtual async Task<int> save() 
         {
            return await _context.SaveChangesAsync();
         }

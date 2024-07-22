@@ -10,10 +10,12 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.Result.AspNetCore" Version="9.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
@@ -22,6 +24,10 @@
     <ProjectReference Include="..\E-Commerce.Identity.Application\E-Commerce.Identity.Application.csproj" />
     <ProjectReference Include="..\E-Commerce.Identity.Infrastructure\E-Commerce.Identity.Infrastructure.csproj" />
     <ProjectReference Include="..\E-Commerce.Infrastructure\E-Commerce.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Upload\" />
   </ItemGroup>
 
 </Project>

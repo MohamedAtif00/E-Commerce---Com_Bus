@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using E_Commerce.Domain.Common;
 using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Application;
 using System;
@@ -11,21 +12,21 @@ namespace E_Commerce.Application.Command.ProductCommands.UpdateProductDetails
 {
     public class UpdateProductDetailsCommandHandler : ICommandHandler<UpdateProductDetailsCommand>
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateProductDetailsCommandHandler(IProductRepository productRepository)
+        public UpdateProductDetailsCommandHandler( IUnitOfWork unitOfWork)
         {
-            _productRepository = productRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result> Handle(UpdateProductDetailsCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var product = await _productRepository.GetById(request.ProductId);
+                var product = await _unitOfWork.ProductRepository.GetById(request.ProductId);
                 product.UpdateDetails(request.name, request.description, request.stsockQuantity);
 
-                int saving = await _productRepository.save();
+                int saving = await _unitOfWork.save();
 
                 if (saving == 0) return Result.Error("no change");
 

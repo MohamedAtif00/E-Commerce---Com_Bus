@@ -1,4 +1,5 @@
-﻿using E_Commerce.SharedKernal.Domain;
+﻿using E_Commerce.Identity.Domain.Model.RoleAggre;
+using E_Commerce.SharedKernal.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -19,7 +19,7 @@ namespace E_Commerce.Domain.Model.ProductAggre.Rules
 
         public bool IsBroken()
         {
-            return Value >= 0; 
+            return Value <= 0; 
         }
     }
 }

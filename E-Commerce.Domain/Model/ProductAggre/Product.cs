@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.ProductAggre.Rules;
+﻿using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Domain.Model.ProductAggre.Rules;
 using E_Commerce.SharedKernal.Domain;
 using System.Diagnostics;
 
@@ -7,25 +8,23 @@ namespace E_Commerce.Domain.Model.ProductAggre
 {
     public sealed class Product : AggregateRoot<ProductId>
     {
-        private Product(ProductId id,
-                        string name,
-                        string description,
-                        Price price,
-                        int stockQuantity) : base(id)
+        private readonly List<Image> _images = new();
+        private Product(ProductId id) : base(id)
         {
-            _name = name;
-            _description = description;
-            _price = price;
-            _stockQuantity = stockQuantity;
+            // EF
         }
 
         private Product(ProductId id,
+                        CategoryId categoryId,
                         string name,
                         string description,
+                        Price price,
                         int stockQuantity):base(id)
         {
             _name = name;
+            _price = price;
             _description = description;
+            this.categoryId = categoryId;
             _stockQuantity = stockQuantity;
         }
 
@@ -34,16 +33,18 @@ namespace E_Commerce.Domain.Model.ProductAggre
         public string _description { get; private set; }
         public Price _price { get; private set; }
         public int _stockQuantity { get; private set; }
-        public DateTime _CreatedAt { get; private init; } = DateTime.Now;
-        public DateTime _UpdatedAt { get; private set; }
+        public DateTime _CreatedAt { get; private init; } = DateTime.UtcNow;
+        public DateTime? _UpdatedAt { get; private set; }
+        public CategoryId categoryId { get; private set; }
+        public IReadOnlyCollection<Image> images => _images.AsReadOnly();
 
-
-        public static Product Create(string name,
+        public static Product Create(CategoryId categoryId,
+                                    string name,
                                     string description,
                                     Price price,
                                     int stockQuantity)
         {
-            return new(ProductId.CreateUnique(),name,description,price,stockQuantity);
+            return new(ProductId.CreateUnique(),categoryId ,name,description,price,stockQuantity);
         }
 
         public void UpdateDetails(string name,
@@ -61,7 +62,10 @@ namespace E_Commerce.Domain.Model.ProductAggre
             _stockQuantity -= number;
         }
 
-         
+        public void AddMasterImage(Image image)
+        {
+            _images.Add(image);
+        }
 
     }
 }

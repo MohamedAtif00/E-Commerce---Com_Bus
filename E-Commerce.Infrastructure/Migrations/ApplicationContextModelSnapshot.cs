@@ -79,8 +79,43 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("_customerId")
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid?>("_customerId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Address", "E_Commerce.Domain.Model.OrderAggre.Order.Address#Address", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("city")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Address_City");
+
+                            b1.Property<string>("state")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Address_State");
+
+                            b1.Property<string>("street")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Address_Street");
+                        });
 
                     b.HasKey("Id");
 
@@ -92,12 +127,17 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("_CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 7, 1, 13, 43, 53, 551, DateTimeKind.Local).AddTicks(9432));
+                        .HasDefaultValue(new DateTime(2024, 7, 22, 11, 28, 0, 300, DateTimeKind.Local).AddTicks(1101));
 
-                    b.Property<DateTime>("_UpdatedAt")
+                    b.Property<DateTime?>("_UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("_description")
@@ -112,6 +152,9 @@ namespace E_Commerce.Infrastructure.Migrations
 
                     b.Property<int>("_stockQuantity")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("categoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.ComplexProperty<Dictionary<string, object>>("_price", "E_Commerce.Domain.Model.ProductAggre.Product._price#Price", b1 =>
                         {
@@ -264,6 +307,45 @@ namespace E_Commerce.Infrastructure.Migrations
                         });
 
                     b.Navigation("_orderItems");
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Model.ProductAggre.Product", b =>
+                {
+                    b.OwnsMany("E_Commerce.Domain.Model.ProductAggre.Image", "images", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("Created")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<bool>("IsMaster")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Path")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("ProductId");
+
+                            b1.ToTable("Image");
+
+                            b1.WithOwner("Product")
+                                .HasForeignKey("ProductId");
+
+                            b1.Navigation("Product");
+                        });
+
+                    b.Navigation("images");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.ReviewAggre.Review", b =>

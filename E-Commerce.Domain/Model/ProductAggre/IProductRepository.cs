@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Domain.Model.ProductAggre
 {
-    public interface IProductRepository : IGenericRepository<Product,ProductId>
+    public interface IProductRepository : IGenericRepository<Product, ProductId>
     {
+        Task<IQueryable<Product>> GetPages();
     }
 }

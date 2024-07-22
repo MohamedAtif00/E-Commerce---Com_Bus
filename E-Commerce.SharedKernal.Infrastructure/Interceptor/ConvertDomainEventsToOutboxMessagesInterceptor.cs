@@ -1,55 +1,91 @@
 ﻿using E_Commerce.SharedKernal.Domain;
-using E_Commerce.SharedKernal.Infrastructure.OutBox;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace E_Commerce.SharedKernal.Infrastructure.Interceptor
 {
     public class ConvertDomainEventsToOutboxMessagesInterceptor : SaveChangesInterceptor
     {
-        public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, 
-                                                                              InterceptionResult<int> result, 
-                                                                              CancellationToken cancellationToken = default)
+        private readonly IPublisher _publisher;
+
+        public ConvertDomainEventsToOutboxMessagesInterceptor(IPublisher publisher)
         {
-            DbContext? dbContext = eventData.Context;
+            _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
+        }
 
-            if (dbContext is null)
-            {
-                return base.SavingChangesAsync(eventData, result, cancellationToken);
-            }
-
-            var domainEvents = dbContext.ChangeTracker
-                .Entries<AggregateRoot<ValueObjectId>>()
-                .Select(x =>x.Entity)
-                .SelectMany(x =>
-                    {
-                        var domainEvents = x.GetDomainEvents();
-                        x.ClearDomainEvents();
-                        return domainEvents;
-                    } 
-                )
-                .Select(domainEvent => new OutboxMessage 
-                {
-                    Id = Guid.NewGuid(),
-                    OccurredOnUtc = DateTime.UtcNow,
-                    Type = domainEvent.GetType().Name,
-                    Content = JsonConvert.SerializeObject(
-                        domainEvent,
-                        new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All} 
-                        )
-                })
+        public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData,
+                                                                           InterceptionResult<int> result,
+                                                                           CancellationToken cancellationToken = default)
+        {
+            var dbContext = eventData.Context;
+            var entities = dbContext.ChangeTracker.Entries<IHasDomainEvents>()
+                .Where(x => x.Entity.DomainEvents.Any())
                 .ToList();
 
-            dbContext.Set<OutboxMessage>().AddRange(domainEvents);
+            if(entities.Count() == 0)
+            {
+               return await base.SavingChangesAsync(eventData, result, cancellationToken);
+            }
+            using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
 
-            return base.SavingChangesAsync(eventData, result, cancellationToken);
+            try
+            {
+                var domainResult = await PublishDomainEvents(dbContext, cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
+
+                if (domainResult)
+                {
+                    return await base.SavingChangesAsync(eventData, result, cancellationToken);
+                   //await dbContext.SaveChangesAsync(cancellationToken);
+                }
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync(cancellationToken);
+                return InterceptionResult<int>.SuppressWithResult(0);
+            }
+
+            return InterceptionResult<int>.SuppressWithResult(0);
+        }
+
+        private async Task<bool> PublishDomainEvents(DbContext dbContext, CancellationToken cancellationToken)
+        {
+            var entities = dbContext.ChangeTracker.Entries<IHasDomainEvents>()
+                .Where(x => x.Entity.DomainEvents.Any())
+                .ToList();
+
+            //if (!entities.Any())
+            //    return false;
+
+            var errors = new List<Exception>();
+            var domainEvents = entities.SelectMany(x => x.Entity.DomainEvents).ToList();
+            var hasPublishedEvents = false;
+
+            foreach (var entity in entities)
+            {
+                entity.Entity.ClearDomainEvents();
+            }
+
+            foreach (var domainEvent in domainEvents)
+            {
+                try
+                {
+                    await _publisher.Publish(domainEvent, cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    errors.Add(ex);
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

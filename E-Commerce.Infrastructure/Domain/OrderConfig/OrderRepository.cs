@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.OrderAggre;
+﻿using E_Commerce.Application.Helper;
+using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace E_Commerce.Infrastructure.Domain.OrderConfig
     {
         public OrderRepository(ApplicationContext context) : base(context)
         {
+        }
+
+        public async Task<IQueryable<Order>> GetPages()
+        {
+            return _context.orders;
         }
     }
 }

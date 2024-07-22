@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\ProductAggre\Events\" />
+    <ProjectReference Include="..\E-Commerce.SharedKernal.Domain\E-Commerce.SharedKernal.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\E-Commerce.SharedKernal.Domain\E-Commerce.SharedKernal.Domain.csproj" />
+    <Folder Include="Model\ProductAggre\Events\" />
   </ItemGroup>
 
 </Project>

@@ -8,8 +8,8 @@ namespace E_Commerce.SharedKernal.Domain
 {
     public interface IGenericRepository<T, TKey>
     {
-        Task<IEnumerable<T>> GetAll();
-        Task<T> GetById(TKey id);
+        Task<List<T>> GetAll();
+        Task<T> GetById(TKey id,bool withTracking = false);
         Task<T> Add(T entity);
         Task Delete(T entity);
         Task<T> Update(T entity);

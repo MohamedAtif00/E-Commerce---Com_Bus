@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.ProductAggre;
+﻿using E_Commerce.Domain.Model.OrderAggre.Events;
+using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Domain;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace E_Commerce.Domain.Model.OrderAggre
 {
     public class OrderItem : Entity<OrderItemId>
     {
-        public OrderItem(OrderItemId id, ProductId productId, int quantity, decimal total, OrderId? orderId = null) : base(id)
+        public OrderItem(OrderItemId id, ProductId productId, int quantity, decimal total, OrderId? orderId ) : base(id)
         {
             _productId = productId;
             _quantity = quantity;

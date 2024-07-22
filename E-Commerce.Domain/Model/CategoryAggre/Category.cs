@@ -1,16 +1,18 @@
 ﻿using E_Commerce.Domain.Model.SuperCategoryAggre;
 using E_Commerce.SharedKernal.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+
 
 namespace E_Commerce.Domain.Model.CategoryAggre
 {
     public class Category : AggregateRoot<CategoryId>
     {
-        private readonly List<Category> _categories = new();
+
+        private readonly List<Category>? _categories = new();
+        public Category():base(CategoryId.CreateUnique())
+        {
+            
+        }
         public Category(CategoryId id, string name, SuperCategoryId? superCategoryId , CategoryId? parentCategoryId ) : base(id)
         {
             _name = name;
@@ -21,11 +23,11 @@ namespace E_Commerce.Domain.Model.CategoryAggre
         public string _name { get;private set; }
         public SuperCategoryId? SuperCategoryId { get; private set; }
         public CategoryId? _parentCategoryId {  get; private set; }
-        public bool _visible { get; private set; } = false;
+        public bool _visible { get; private set; } = true;
 
-        public IReadOnlyCollection<Category> ChildCategories => _categories;
+        public virtual IReadOnlyCollection<Category>? ChildCategories => _categories;
 
-        public static Category Create(string name, SuperCategoryId? superCategoryId , CategoryId? parentCategory)
+        public static Category Create(string name, SuperCategoryId? superCategoryId = null, CategoryId? parentCategory = null)
         {
             return new(CategoryId.CreateUnique(),name,superCategoryId,parentCategory);
         }

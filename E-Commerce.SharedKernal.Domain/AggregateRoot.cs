@@ -11,4 +11,7 @@ namespace E_Commerce.SharedKernal.Domain
     {
         protected AggregateRoot(TId id) : base(id) { }
     }
+
+    public interface IAggregate
+    { }
 }

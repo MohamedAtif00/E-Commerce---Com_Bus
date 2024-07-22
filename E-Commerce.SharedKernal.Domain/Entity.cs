@@ -9,7 +9,7 @@ namespace E_Commerce.SharedKernal.Domain
     public abstract class Entity<TId> : IHasDomainEvents, IEquatable<TId>
          where TId : notnull
     {
-        protected static readonly List<IDomainEvents> _domainEvents = new();
+        protected static  List<IDomainEvents> _domainEvents = new();
         public TId Id { get; protected set; }
 
         public IReadOnlyList<IDomainEvents> DomainEvents => _domainEvents.ToList();
