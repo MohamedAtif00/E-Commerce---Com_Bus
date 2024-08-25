@@ -1,6 +1,9 @@
 ﻿using Ardalis.Result.AspNetCore;
 using E_Commerce.Application.Command.CategoryCommand.AddCategory;
+using E_Commerce.Application.Query.AdministrationQuery.CategryEarningChart;
 using E_Commerce.Application.Query.CategoryQuery.GetAllCategoriesQuery;
+using E_Commerce.Application.Query.CategoryQuery.GetSingleCategoryQuery;
+using E_Commerce.Domain.Model.CategoryAggre;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,14 +26,26 @@ namespace E_Commerce.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(_mediator.Send(new GetAllCategoriesQuery()));
+            var result =await _mediator.Send(new GetAllCategoriesQuery());
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetCategoriesProfits/{days}")]
+        public async Task<IActionResult> GetCategoriesProfits(int days)
+        {
+            var result = await _mediator.Send(new GetCategoryEarningChartQuery(days));
+
+            return Ok(result);
         }
 
         // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(CategoryId id)
         {
-            return "value";
+            var result = await _mediator.Send(new GetSingleCategoryQuery(id));
+
+            return Ok(result);
         }
 
         // POST api/<CategoryController>

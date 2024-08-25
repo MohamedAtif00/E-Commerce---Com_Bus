@@ -13,7 +13,7 @@ namespace E_Commerce.Infrastructure.Domain
         where T : Entity<Tkey>
         where Tkey : ValueObjectId
     {
-        public readonly ApplicationContext _context;
+        public  ApplicationContext _context;
 
         protected GenericRepository(ApplicationContext context)
         {

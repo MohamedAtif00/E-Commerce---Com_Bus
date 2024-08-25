@@ -1,6 +1,6 @@
 ﻿using E_Commerce.Identity.Domain.Model;
-using E_Commerce.Identity.Domain.Model.RoleAggre;
 using E_Commerce.Identity.Domain.Model.UserAggre;
+using E_Commerce.Identity.Domain.Model.UserRoleAggre;
 using E_Commerce.SharedKernal.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Identity.Infrastructure.Data
 {
-    public class ApplicationUserContext : DbContext
+    public class ApplicationUserContext : IdentityDbContext<User,UserRole,Guid>
     {
         private readonly List<string> _errors= new();
         public ApplicationUserContext(DbContextOptions options) : base(options)
@@ -21,7 +21,7 @@ namespace E_Commerce.Identity.Infrastructure.Data
         }
 
         public DbSet<User> users { get; set; }
-        public DbSet<Role> roles { get; set; }
+        public DbSet<UserRole> roles { get; set; }
 
         public IReadOnlyCollection<string> errors => _errors.AsReadOnly();
 

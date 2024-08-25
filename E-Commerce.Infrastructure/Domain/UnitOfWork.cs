@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Domain.Common;
+using E_Commerce.Domain.Model.AdministrationAggre;
 using E_Commerce.Domain.Model.BasketAggre;
 using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Domain.Model.OrderAggre;
@@ -15,7 +16,7 @@ namespace E_Commerce.Infrastructure.Domain
     {
         public ApplicationContext _context { get; }
 
-        public UnitOfWork(ApplicationContext context, IProductRepository productRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository, ISuperCategoryRepository superCategoryRepository, ISpecificationRepository specificationRepository, IImageRepository imageRepository )
+        public UnitOfWork(ApplicationContext context, IProductRepository productRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository, ISuperCategoryRepository superCategoryRepository, ISpecificationRepository specificationRepository, IImageRepository imageRepository, IAdministrationRepository administrationRepository, ISpecialProductsRepository specialProductsRepository)
         {
             _context = context;
             ProductRepository = productRepository;
@@ -24,6 +25,8 @@ namespace E_Commerce.Infrastructure.Domain
             SuperCategoryRepository = superCategoryRepository;
             SpecificationRepository = specificationRepository;
             ImageRepository = imageRepository;
+            AdministrationRepository = administrationRepository;
+            SpecialProductsRepository = specialProductsRepository;
         }
 
         public IProductRepository ProductRepository { get; set; }
@@ -33,7 +36,8 @@ namespace E_Commerce.Infrastructure.Domain
         public ICategoryRepository CategoryRepository { get; set; }
         public ISuperCategoryRepository SuperCategoryRepository { get; set; }
         public ISpecificationRepository SpecificationRepository { get; set; }
-
+        public IAdministrationRepository AdministrationRepository { get; set; }
+        public ISpecialProductsRepository SpecialProductsRepository { get; set; }
 
 
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.ProductQuery.GetAllProducts
 {
-    public record GetAllProductsQuery(int pageNumber,int pageSize):IQuery<PageList<Product>>;
+    public record GetAllProductsQuery(int pageNumber,int pageSize,string? sortColumn,string? searchTerm ):IQuery<PageList<Product>>;
     
     
 }

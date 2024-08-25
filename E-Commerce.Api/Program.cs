@@ -1,9 +1,13 @@
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
+using E_Commerce.Api.Extension;
+using E_Commerce.Api.seed;
 using E_Commerce.Application;
+using E_Commerce.Domain.Model.CategoryAggre.Converters;
 using E_Commerce.Domain.Model.OrderAggre.Converters;
 using E_Commerce.Domain.Model.ProductAggre.Converters;
+using E_Commerce.Identity.Infrastructure;
 using E_Commerce.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -17,7 +21,7 @@ namespace E_Commerce.Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static  async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
@@ -29,6 +33,7 @@ namespace E_Commerce.Api
             {
                 // register infrastructure
                 containerBuilder.RegisterModule(new InfrastructureModule(configuration));
+                containerBuilder.RegisterModule(new IdentityInfrastructureModule(configuration));
                 containerBuilder.RegisterModule(new ApplicationModule());
             });
 
@@ -36,6 +41,8 @@ namespace E_Commerce.Api
             {
                 config.RegisterServicesFromAssemblies(typeof(ApplicationModule).Assembly);
             });
+
+            builder.Services.AddIdentityService(configuration);
 
             builder.Services.AddCors(options =>
             {
@@ -69,30 +76,53 @@ namespace E_Commerce.Api
                     op.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     op.SerializerSettings.Converters.Add(new ProductConverter.ProductIdJsonConverter());
                     op.SerializerSettings.Converters.Add(new OrderConverter.OrderIdJsonConverter());
+                    op.SerializerSettings.Converters.Add(new CategoryConverter.CategoryIdJsonConverter());
+                    op.SerializerSettings.Converters.Add(new ImageConverter.ImageIdJsonConverter());
                 });
             builder.Services.AddSwaggerGen(c => 
             {
                 
                 c.SchemaFilter<ProductIdSchemaFilter>();
                 c.SchemaFilter<OrderIdSchemaFilter>();
+                c.SchemaFilter<CategoryIdSchemaFilter>();
+                c.SchemaFilter<ImageIdSchemaFilter>();
                 c.OperationFilter<SwaggerFileOperationFilter>();
             });
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            app.UseSwagger();
-            app.UseSwaggerUI();
 
-            app.UseCors("cors");
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection(); // Redirect HTTP to HTTPS
 
-            app.UseAuthorization();
+            app.UseStaticFiles(); // Serve static files (like Angular files in wwwroot)
 
+            app.UseRouting(); // Enables routing
 
+            app.UseCors("cors"); // Apply CORS policy
+
+            app.UseAuthorization(); // Authorization should be after routing and CORS
+
+            // Enable Swagger and Swagger UI
+            //app.UseSwagger();
+            //app.UseSwaggerUI();
+
+            // Map controller routes directly
             app.MapControllers();
 
-            app.Run();
+            // Map fallback to serve Angular app (for client-side routing)
+            app.MapFallbackToFile("index.html");
+
+            // Call the seeding method (in case of first-time or updated deployment)
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                await AdminSeeder.SeedAdminUserAsync(services, configuration);
+            }
+
+            // Run the application
+            await app.RunAsync();
+
         }
     }
 }

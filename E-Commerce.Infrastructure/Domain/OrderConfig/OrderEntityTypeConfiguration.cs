@@ -16,6 +16,7 @@ namespace E_Commerce.Infrastructure.Domain.OrderConfig
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
+            
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasConversion(x =>x.value,x =>OrderId.Create(x));
 

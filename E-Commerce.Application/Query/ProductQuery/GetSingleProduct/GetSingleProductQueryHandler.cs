@@ -25,7 +25,13 @@ namespace E_Commerce.Application.Query.ProductQuery.GetSingleProduct
             {
                 var product = await _unitOfWork.ProductRepository.GetById(request.id);
 
+
+
                 if (product == null) return Result.NotFound();
+
+                var images = await _unitOfWork.ImageRepository.GetImage(request.id);
+
+                product.AddImages(images);
 
                 return Result.Success(product);
             }

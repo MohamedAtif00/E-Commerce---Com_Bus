@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.ProductQuery.GetProductImage
 {
-    public record GetProductMasterImageQuery(ProductId ProductId):IQuery<string>;
+    public record GetProductMasterImageQuery(ProductId ProductId):IQuery<Image>;
     
     
 }

@@ -14,7 +14,6 @@ namespace E_Commerce.Identity.Infrastructure.Domain.UserConfig
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasConversion(x =>x.value,x =>UserId.Create(x));
 
 
         }

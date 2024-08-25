@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.Result.AspNetCore" Version="9.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
@@ -28,6 +29,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Upload\" />
+    <Folder Include="wwwroot\Upload\ProductImages\" />
+    <Folder Include="wwwroot\Upload\ProductImage\" />
   </ItemGroup>
 
 </Project>

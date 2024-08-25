@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using E_Commerce.Application.Helper;
 using E_Commerce.Domain.Common;
 using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Application;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Command.ProductCommands.UpdateProductDetails
 {
-    public class UpdateProductDetailsCommandHandler : ICommandHandler<UpdateProductDetailsCommand>
+    public class UpdateProductDetailsCommandHandler : ICommandHandler<UpdateProductDetailsCommand,Product>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -19,23 +20,59 @@ namespace E_Commerce.Application.Command.ProductCommands.UpdateProductDetails
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(UpdateProductDetailsCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Product>> Handle(UpdateProductDetailsCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var product = await _unitOfWork.ProductRepository.GetById(request.ProductId);
-                product.UpdateDetails(request.name, request.description, request.stsockQuantity);
+                // Fetch the product by ID, including its images
+                var product = await _unitOfWork.ProductRepository.GetById(request.ProductId,true);
+                if (product == null)
+                {
+                    return Result.Error("Product not found");
+                }
 
-                int saving = await _unitOfWork.save();
+                // Update product details
+                
+                var price = Price.Create(request.price, request.discount, request.hasPercentage);
+                product.UpdateDetails(request.name,
+                                      request.description,
+                                      request.stsockQuantity, // Corrected from 'sstockQuantity' to 'stockQuantity'
+                                      price,
+                                      request.CategoryId);
 
-                if (saving == 0) return Result.Error("no change");
+                //Remove all images from the product
+                var masterImage = await _unitOfWork.ImageRepository.GetMasterImageByProductId(request.ProductId);
+                if (masterImage != null)
+                { 
+                    await _unitOfWork.ImageRepository.Delete(masterImage);
+                    var deletemasterImage =  ImageHelper.DeleteImage(masterImage.Path,request.rootPath);
+                }
+                var images = await _unitOfWork.ImageRepository.GetImage(request.ProductId);
+                foreach (var image in images)
+                {
+                    await _unitOfWork.ImageRepository.Delete(image);
+                    ImageHelper.DeleteImage(image.Path,request.rootPath);
+                }
+                // Update the product in the repository
+                await _unitOfWork.ProductRepository.Update(product);
 
-                return Result.Success();
+                // Save changes
+                var savingResult = await _unitOfWork.save(); // Ensure 'Save' method is named correctly
+
+                if (savingResult == 0)
+                {
+                    return Result.Error("No changes were made");
+                }
+
+                return Result.Success(product);
             }
             catch (Exception ex)
             {
-                return  Result.Error(ex.Message);   
+                // Log the exception if necessary
+                return Result.Error($"An error occurred while updating the product: {ex.Message}");
             }
         }
+
+
     }
 }

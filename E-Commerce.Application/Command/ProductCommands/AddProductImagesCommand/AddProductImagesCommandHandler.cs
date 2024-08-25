@@ -30,14 +30,12 @@ namespace E_Commerce.Application.Command.ProductCommands.AddProductImagesCommand
 
                 List<Image> images = new();
 
-                foreach (var file in request.files)
-                {
-                    var path = await ImageHelper.SaveImageAsync(file, request.rootPath, request.folderName);
 
-                    Image image = Image.Create(Path.GetFileName(path), request.ProductId, path);
+                var path = await ImageHelper.SaveImageAsync(request.file, request.rootPath, request.folderName);
 
-                    images.Add(image);
-                }
+                Image image = Image.Create(request.fileName, request.ProductId, path);
+
+                images.Add(image);
 
                 await _unitOfWork.ImageRepository.AddRange(images);
 

@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result;
 using E_Commerce.Domain.Common;
 using E_Commerce.Domain.Model.OrderAggre;
+using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Application;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery
 {
-    public class GetSingleOrderQueryHandler : IQueryHandler<GetSingleOrderQuery, Order>
+    public class GetSingleOrderQueryHandler : IQueryHandler<GetSingleOrderQuery, GetSingleOrderDto>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -19,7 +20,7 @@ namespace E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<Order>> Handle(GetSingleOrderQuery request, CancellationToken cancellationToken)
+        public async Task<Result<GetSingleOrderDto>> Handle(GetSingleOrderQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -27,7 +28,21 @@ namespace E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery
 
                 if (order == null) return Result.NotFound("this order is not exist");
 
-                return Result.Success(order);
+                List<OrderItemDto> products = new();
+
+                foreach (var orderItem in order._orderItems)
+                {
+                    var product = await _unitOfWork.ProductRepository.GetById(orderItem._productId);
+
+                    OrderItemDto Dto = new(product.Id,product._name,product._stockQuantity,product._price._total,orderItem._total);
+
+                    products.Add(Dto);
+                }
+
+                GetSingleOrderDto OrderDto = new(order.Id,order.CustomerName,order.PhoneNumber,order.CreatedDate,order.Address,products,order.TotalPrice);
+
+
+                return Result.Success(OrderDto);
             }
             catch (Exception ex)
             {

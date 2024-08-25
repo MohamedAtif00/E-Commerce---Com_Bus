@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery
 {
-    public record GetSingleOrderQuery(OrderId OrderId):IQuery<Order>;
+    public record GetSingleOrderQuery(OrderId OrderId):IQuery<GetSingleOrderDto>;
     
     
 }

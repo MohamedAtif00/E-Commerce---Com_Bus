@@ -1,6 +1,8 @@
 ﻿using E_Commerce.Application.Helper;
 using E_Commerce.Domain.Model.OrderAggre;
+using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +21,21 @@ namespace E_Commerce.Infrastructure.Domain.OrderConfig
         {
             return _context.orders;
         }
+
+        public async Task<List<Order>> GetLastDaysOrders(int days)
+        {
+            // Use AsNoTracking for read-only queries if you don't need to track the entities
+            return await _context.orders
+                .AsNoTracking()
+                .Where(x => x.CreatedDate >= DateTime.UtcNow.AddDays(-days))
+                .ToListAsync();
+        }
+
+        public async Task<Order> GetOrderWithOrderItems(Order order)
+        {
+            return await _context.orders.Where(x => x == order).FirstOrDefaultAsync();
+        }
+
+
     }
 }

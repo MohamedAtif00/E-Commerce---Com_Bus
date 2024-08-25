@@ -36,6 +36,7 @@ namespace E_Commerce.Domain.Model.ProductAggre
         public DateTime _CreatedAt { get; private init; } = DateTime.UtcNow;
         public DateTime? _UpdatedAt { get; private set; }
         public CategoryId categoryId { get; private set; }
+
         public IReadOnlyCollection<Image> images => _images.AsReadOnly();
 
         public static Product Create(CategoryId categoryId,
@@ -49,11 +50,15 @@ namespace E_Commerce.Domain.Model.ProductAggre
 
         public void UpdateDetails(string name,
                             string description,
-                            int stockQuantity)
+                            int stockQuantity,
+                            Price price,
+                            CategoryId categoryId)
         {
             _name = name;
             _description = description;
             _stockQuantity = stockQuantity;
+            _price = price;
+            this.categoryId = categoryId;
         }
 
         public void DecreaseInventory(int number)
@@ -66,6 +71,18 @@ namespace E_Commerce.Domain.Model.ProductAggre
         {
             _images.Add(image);
         }
+
+        public void AddImages(List<Image> images)
+        {
+            _images.AddRange(images);
+        }
+
+        public void DeleteAllImages()
+        {
+            _images.Clear();
+        }
+
+      
 
     }
 }

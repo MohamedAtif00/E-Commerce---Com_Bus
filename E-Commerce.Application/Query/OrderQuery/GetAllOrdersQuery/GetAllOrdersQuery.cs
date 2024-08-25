@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.OrderQuery.GetAllOrdersQuery
 {
-    public record GetAllOrdersQuery(int pageNumber,int pageSize):IQuery<PageList<OrderDTOs.GetAllOrdersDTO>>;
+    public record GetAllOrdersQuery(int pageNumber,int pageSize,string? sortColumn,string? searchTerm,bool des = false):IQuery<PageList<OrderDTOs.GetAllOrdersDTO>>;
     
     
 }

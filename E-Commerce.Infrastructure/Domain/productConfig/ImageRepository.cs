@@ -17,8 +17,13 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
 
         public async Task<Image> GetMasterImageByProductId(ProductId productId)
         {
-            var product = await _context.products.FirstOrDefaultAsync(x => x.Id == productId);
-            return product.images.Where(x => x.IsMaster).Single();
+            //var product = await _context.products.FirstOrDefaultAsync(x => x.Id == productId);
+            return await _context.images.Where(x => x.ProductId == productId && x.IsMaster && !x.IsRemoved).SingleOrDefaultAsync();
+        }
+
+        public async Task<List<Image>> GetImage(ProductId productId)
+        {
+            return _context.images.Where(x => x.ProductId == productId && !x.IsRemoved && !x.IsMaster).ToList();
         }
 
         public async Task AddRange(List<Image> images)

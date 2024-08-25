@@ -22,21 +22,21 @@ namespace E_Commerce.Api.Controllers
         }
 
         // GET: api/<OrderController>
-        [HttpGet("GetAllOrders/{PageNumber}")]
-        public async Task<IActionResult> Get(int PageNumber)
+        [HttpGet("GetAllOrders")]
+        public async Task<IActionResult> Get([FromQuery] OrderQuery query)
         {
-            var result = await _mediator.Send(new GetAllOrdersQuery(PageNumber,5));
+            var result = await _mediator.Send(new GetAllOrdersQuery(query.pageNumber,5,query.sortColumn,query.searchTerm,query.des));
             return Ok(result);
         }
 
         // GET api/<OrderController>/5
-        [HttpGet("{id}")]
+        [HttpGet("GetSingleOrder/{id}")]
         public async Task<IActionResult> Get(OrderId id)
         {
             var result = await _mediator.Send(new GetSingleOrderQuery(id));
-
             return Ok(result);
         }
+
 
         // POST api/<OrderController>
         [HttpPost]
@@ -65,4 +65,5 @@ namespace E_Commerce.Api.Controllers
         {
         }
     }
+    public record OrderQuery(int pageNumber, string? searchTerm, string? sortColumn,bool des = false);
 }

@@ -24,7 +24,7 @@ namespace E_Commerce.Application.Command.ProductCommands.AddProductCommand
         {
             try
             {
-                var price = Price.Create(request.product.price,request.product.discount);
+                var price = Price.Create(request.product.price,request.product.discount,request.percentage);
                 var product = Product.Create(request.product.categoryId,request.product.name,request.product.description,price,request.product.stockQuantity); 
 
                 await _productRepository.Add(product);

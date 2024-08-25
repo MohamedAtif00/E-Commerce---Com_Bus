@@ -23,6 +23,76 @@ namespace E_Commerce.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("E_Commerce.Domain.Model.AdministrationAggre.Administration", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("_websiteColor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ComplexProperty<Dictionary<string, object>>("_description", "E_Commerce.Domain.Model.AdministrationAggre.Administration._description#Description", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Desc_Arb")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Desc_Eng")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Title_Arb")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Title_Eng")
+                                .HasColumnType("nvarchar(max)");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("_heroImage", "E_Commerce.Domain.Model.AdministrationAggre.Administration._heroImage#HeroImage", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Path")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Hero_Path");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("_welcomeMessage", "E_Commerce.Domain.Model.AdministrationAggre.Administration._welcomeMessage#WelcomeMessage", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Desc_Arb")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Desc_Eng")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Title_Arb")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Title_Eng")
+                                .HasColumnType("nvarchar(max)");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.ToTable("administrations");
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Model.AdministrationAggre.SpecialProducts", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("productId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SpecialProducts");
+                });
+
             modelBuilder.Entity("E_Commerce.Domain.Model.CategoryAggre.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -122,6 +192,38 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.ToTable("orders");
                 });
 
+            modelBuilder.Entity("E_Commerce.Domain.Model.ProductAggre.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsMaster")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("images");
+                });
+
             modelBuilder.Entity("E_Commerce.Domain.Model.ProductAggre.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -135,7 +237,7 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<DateTime>("_CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 7, 22, 11, 28, 0, 300, DateTimeKind.Local).AddTicks(1101));
+                        .HasDefaultValue(new DateTime(2024, 8, 11, 8, 27, 30, 740, DateTimeKind.Local).AddTicks(1375));
 
                     b.Property<DateTime?>("_UpdatedAt")
                         .HasColumnType("datetime2");
@@ -164,11 +266,15 @@ namespace E_Commerce.Infrastructure.Migrations
                                 .HasColumnType("int")
                                 .HasColumnName("Price_discount");
 
+                            b1.Property<bool?>("_hasPercentage")
+                                .HasColumnType("bit")
+                                .HasColumnName("Price_hasPercentage");
+
                             b1.Property<decimal>("_price")
                                 .HasColumnType("decimal(18,2)")
                                 .HasColumnName("Price_price");
 
-                            b1.Property<decimal?>("_total")
+                            b1.Property<decimal>("_total")
                                 .HasColumnType("decimal(18,2)")
                                 .HasColumnName("Price_total");
                         });
@@ -309,43 +415,15 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Navigation("_orderItems");
                 });
 
-            modelBuilder.Entity("E_Commerce.Domain.Model.ProductAggre.Product", b =>
+            modelBuilder.Entity("E_Commerce.Domain.Model.ProductAggre.Image", b =>
                 {
-                    b.OwnsMany("E_Commerce.Domain.Model.ProductAggre.Image", "images", b1 =>
-                        {
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uniqueidentifier");
+                    b.HasOne("E_Commerce.Domain.Model.ProductAggre.Product", "Product")
+                        .WithMany("images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                            b1.Property<DateTime>("Created")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<bool>("IsMaster")
-                                .HasColumnType("bit");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Path")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<Guid>("ProductId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("ProductId");
-
-                            b1.ToTable("Image");
-
-                            b1.WithOwner("Product")
-                                .HasForeignKey("ProductId");
-
-                            b1.Navigation("Product");
-                        });
-
-                    b.Navigation("images");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.ReviewAggre.Review", b =>
@@ -382,6 +460,11 @@ namespace E_Commerce.Infrastructure.Migrations
             modelBuilder.Entity("E_Commerce.Domain.Model.CategoryAggre.Category", b =>
                 {
                     b.Navigation("ChildCategories");
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Model.ProductAggre.Product", b =>
+                {
+                    b.Navigation("images");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.SpecificationAggre.Specification", b =>

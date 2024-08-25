@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.CategoryAggre;
+﻿using E_Commerce.Domain.Model.AdministrationAggre;
+using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.Domain.Model.ProductOptionAggre;
@@ -24,9 +25,12 @@ namespace E_Commerce.Infrastructure.Data
         public DbSet<Category> categories   { get; set; }
         public DbSet<Order> orders { get; set; }
         public DbSet<Product> products { get; set; }
+        public DbSet<Image> images { get; set; }    
         public DbSet<ProductOption> productsOption { get; set; }
         public DbSet<Specification> specifications { get; set; }
         public DbSet<SuperCategory> superCategories { get; set; }
+        public DbSet<Administration> administrations { get; set; }
+        public DbSet<SpecialProducts> SpecialProducts { get; set; }
 
         public IReadOnlyCollection<string> Errors => _error;
 

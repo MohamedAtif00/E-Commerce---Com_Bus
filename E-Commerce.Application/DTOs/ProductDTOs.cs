@@ -16,6 +16,7 @@ namespace E_Commerce.Application.DTOs
                                     int discount,
                                     CategoryId categoryId,
                                     decimal price,
+                                    bool? hasPercentage,
                                     int stockQuantity);
 
         public record UpdateProductDTO();

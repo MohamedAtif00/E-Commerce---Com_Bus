@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Command.ProductCommands.AddProductImagesCommand
 {
-    public record AddProductImagesCommand(ProductId ProductId,List<IFormFile> files,string rootPath,string folderName):ICommand;
+    public record AddProductImagesCommand(ProductId ProductId,IFormFile file,string fileName,string rootPath,string folderName):ICommand;
     
     
 }

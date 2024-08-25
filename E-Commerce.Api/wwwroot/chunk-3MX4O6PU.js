@@ -1,0 +1,1 @@
+import{Q as e,g as o}from"./chunk-GQ3SYBJB.js";var s=(()=>{let t=class t{constructor(){this.currentRoute=new o("")}};t.\u0275fac=function(c){return new(c||t)},t.\u0275prov=e({token:t,factory:t.\u0275fac,providedIn:"root"});let r=t;return r})();export{s as a};

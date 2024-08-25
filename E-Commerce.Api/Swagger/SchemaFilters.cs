@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.OrderAggre;
+﻿using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.ProductAggre;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -88,5 +89,28 @@ namespace E_Commerce.Api.Swagger
             }
         }
 
+        public class CategoryIdSchemaFilter : ISchemaFilter
+        {
+            public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+            {
+                if (context.Type == typeof(CategoryId))
+                {
+                    schema.Type = "string";
+                    schema.Format = "uuid";
+                }
+            }
+        }
+
+        public class ImageIdSchemaFilter : ISchemaFilter
+        {
+            public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+            {
+                if (context.Type == typeof(ImageId))
+                {
+                    schema.Type = "string";
+                    schema.Format = "uuid";
+                }
+            }
+        }
     }
 }

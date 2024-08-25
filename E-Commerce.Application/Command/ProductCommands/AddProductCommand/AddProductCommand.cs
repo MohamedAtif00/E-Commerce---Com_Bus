@@ -5,7 +5,7 @@ using E_Commerce.SharedKernal.Application;
 
 namespace E_Commerce.Application.Command.ProductCommands.AddProductCommand
 {
-    public record AddProductCommand(ProductDTOs.CreateProductDTO product) :ICommand<Product>;
+    public record AddProductCommand(ProductDTOs.CreateProductDTO product,bool percentage = false) :ICommand<Product>;
     
     
 }

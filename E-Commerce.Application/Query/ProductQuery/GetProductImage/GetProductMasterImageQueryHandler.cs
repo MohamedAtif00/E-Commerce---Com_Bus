@@ -1,5 +1,6 @@
 ﻿using Ardalis.Result;
 using E_Commerce.Domain.Common;
+using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Application;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.ProductQuery.GetProductImage
 {
-    public class GetProductMasterImageQueryHandler : IQueryHandler<GetProductMasterImageQuery, string>
+    public class GetProductMasterImageQueryHandler : IQueryHandler<GetProductMasterImageQuery, Image>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -18,7 +19,7 @@ namespace E_Commerce.Application.Query.ProductQuery.GetProductImage
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<string>> Handle(GetProductMasterImageQuery request, CancellationToken cancellationToken)
+        public async Task<Result<Image>> Handle(GetProductMasterImageQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -28,7 +29,7 @@ namespace E_Commerce.Application.Query.ProductQuery.GetProductImage
 
                 if (image == null) return Result.Error("there is no image");
 
-                return Result.Success(image.Path);
+                return Result.Success(image);
             }
             catch (Exception ex)
             {

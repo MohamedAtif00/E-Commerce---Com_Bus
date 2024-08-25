@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.BasketAggre;
+﻿using E_Commerce.Domain.Model.AdministrationAggre;
+using E_Commerce.Domain.Model.BasketAggre;
 using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.ProductAggre;
@@ -20,6 +21,8 @@ namespace E_Commerce.Domain.Common
         ISuperCategoryRepository SuperCategoryRepository { get; set; }
         ISpecificationRepository SpecificationRepository { get; set; }
         IImageRepository ImageRepository { get; set; }
+        IAdministrationRepository AdministrationRepository { get; set; }
+        ISpecialProductsRepository SpecialProductsRepository { get; set; }
 
         void AddError(string error);
         List<string> GetErrors();

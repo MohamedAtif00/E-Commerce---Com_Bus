@@ -50,6 +50,9 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
 
                     price.Property(p => p._total)
                     .HasColumnName("Price_total");
+
+                    price.Property(p => p._hasPercentage)
+                    .HasColumnName("Price_hasPercentage");
                     // Optional: Ignore total property if not mapped
                     // price.Ignore(p => p._total);
                 }
@@ -63,14 +66,7 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
                 .HasDefaultValue(DateTime.Now); // Example: Set default value for created date
 
 
-            // Optional: Configure other entity relationships, indexes, etc.
-            builder.OwnsMany(x => x.images, config => 
-            {
-                config.WithOwner(x => x.Product).HasForeignKey(x =>x.ProductId);
 
-                config.HasKey(x =>x.Id);
-                config.Property(x => x.Id).HasConversion(x =>x.value ,value =>ImageId.Create(value)); ;
-            });
         }
     }
 }

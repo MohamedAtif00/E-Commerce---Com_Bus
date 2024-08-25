@@ -1,13 +1,8 @@
 ﻿using Ardalis.Result;
 using E_Commerce.Application.DTOs;
 using E_Commerce.Domain.Common;
-using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.SharedKernal.Application;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace E_Commerce.Application.Query.CategoryQuery.GetAllCategoriesQuery
 {
@@ -24,19 +19,20 @@ namespace E_Commerce.Application.Query.CategoryQuery.GetAllCategoriesQuery
         {
             try
             {
-                var categories =  _unitOfWork.CategoryRepository.GetAllMod(x =>x.ChildCategories);
+                var categories = await _unitOfWork.CategoryRepository.GetAll();
 
 
-                List<CategoryDTO> categoryDTOs = new();
-                foreach (var category in categories)
-                {
-                    var dto = new CategoryDTO() { Id= category.Id.value,Name=category._name};
+                List<CategoryDTO> categoryDTOs = categories.Select(x =>new CategoryDTO {Id=x.Id.value,Name=x._name}).ToList();
+                //foreach (var category in categories)
+                //{
+                //    var dto = new CategoryDTO() { Id= category.Id.value,Name=category._name};
 
-                    categoryDTOs.Add(dto);
-                }
+                //    categoryDTOs.Add(dto);
+                //}
 
+            
 
-                return Result.Success(categoryDTOs);
+                return Result.Success(categoryDTOs );
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using E_Commerce.SharedKernal.Domain;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Identity.Domain.Model.UserRoleAggre
 {
-    public class UserRole : AggregateRoot<UserRoleId>
+    public class UserRole : IdentityRole<Guid>
     {
-        public UserRole(UserRoleId id) : base(id)
+        public UserRole() 
         {
         }
     }

@@ -19,6 +19,7 @@ namespace E_Commerce.Domain.Model.ProductAggre
 
         public string Name { get; set; }
         public bool IsMaster { get; set; } = false;
+        public bool IsRemoved { get; set; } = false;
         public string Path { get; set; }
         public DateTime Created { get; private init; } = DateTime.Now;
         public ProductId ProductId { get;private set; }

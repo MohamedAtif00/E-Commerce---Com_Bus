@@ -18,7 +18,7 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
 
         public override async Task<List<Product>> GetAll()
         {
-            return await _context.products.Include(x =>x.images.Where(x =>x.IsMaster)).ToListAsync();
+            return await _context.products.Include(x =>x.images.Where(x =>x.IsMaster && !x.IsRemoved)).ToListAsync();
         }
 
         public async Task<IQueryable<Product>> GetPages()
