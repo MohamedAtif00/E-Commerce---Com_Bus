@@ -47,15 +47,7 @@ namespace E_Commerce.Infrastructure.Domain
            return await  _context.SaveChangesAsync();
         }
 
-        public List<string> GetErrors()
-        {
-            return _context.Errors.ToList();
-        }
 
-        public void AddError(string error)
-        {
-            _context.AddError(error);
-        }
         //protected virtual void Dispose(bool disposing)
         //{
         //    if (disposing)

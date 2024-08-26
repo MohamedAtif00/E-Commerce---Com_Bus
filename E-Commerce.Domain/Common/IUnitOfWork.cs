@@ -24,8 +24,6 @@ namespace E_Commerce.Domain.Common
         IAdministrationRepository AdministrationRepository { get; set; }
         ISpecialProductsRepository SpecialProductsRepository { get; set; }
 
-        void AddError(string error);
-        List<string> GetErrors();
         Task RollbackAsync();
         Task<int> save();
     }

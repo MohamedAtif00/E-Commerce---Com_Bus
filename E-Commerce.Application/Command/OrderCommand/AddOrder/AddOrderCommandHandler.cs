@@ -56,11 +56,6 @@ namespace E_Commerce.Application.Command.OrderCommand.AddOrder
 
                 // Save changes to the repository
                 int saving = await _unitOfWork.save();
-                if (saving == 0)
-                {
-                    _unitOfWork.AddError("No changes were made to the database.");
-                    return Result.Error(_unitOfWork.GetErrors().FirstOrDefault());
-                }
 
                 return Result.Success();
             }

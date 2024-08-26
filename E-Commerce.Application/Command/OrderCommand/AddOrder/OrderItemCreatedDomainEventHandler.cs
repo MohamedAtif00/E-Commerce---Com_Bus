@@ -26,8 +26,6 @@ namespace E_Commerce.Application.Command.OrderCommand.AddOrder
                 var product = await _unitOfWork.ProductRepository.GetById(notification.ProductId);
                 if (product == null)
                 {
-                    _logger.LogError($"Product with ID {notification.ProductId} not found.");
-                    _unitOfWork.AddError($"Product was not found.");
                     throw new Exception("Product is not exist") ; // Or handle the case where product is not found
                 }
 
@@ -41,7 +39,6 @@ namespace E_Commerce.Application.Command.OrderCommand.AddOrder
             {
                 _logger.LogError(ex, "Error occurred while handling OrderItemCreatedDomainEvent.");
                 // Rethrow or handle the exception as appropriate for your application
-                _unitOfWork.AddError("No changes were made to the database.");
                 //await _unitOfWork.RollbackAsync();
                 throw new Exception(ex.Message);
             }

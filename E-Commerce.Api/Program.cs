@@ -33,7 +33,6 @@ namespace E_Commerce.Api
             {
                 // register infrastructure
                 containerBuilder.RegisterModule(new InfrastructureModule(configuration));
-                containerBuilder.RegisterModule(new IdentityInfrastructureModule(configuration));
                 containerBuilder.RegisterModule(new ApplicationModule());
             });
 

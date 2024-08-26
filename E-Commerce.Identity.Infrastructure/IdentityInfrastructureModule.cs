@@ -23,14 +23,15 @@ namespace E_Commerce.Identity.Infrastructure
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(context =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<ApplicationUserContext>();
+            //builder.Register(context =>
+            //{
+            //    var optionsBuilder = new DbContextOptionsBuilder<ApplicationUserContext>();
 
-                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Identity"));
+            //    optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Identity"));
 
-                return new ApplicationUserContext(optionsBuilder.Options);
-            }).AsSelf().InstancePerLifetimeScope(); // Register as scoped
+            //    return new ApplicationUserContext(optionsBuilder.Options);
+            //}).AsSelf().InstancePerLifetimeScope(); 
+            // Register as scoped
         }
 
     }

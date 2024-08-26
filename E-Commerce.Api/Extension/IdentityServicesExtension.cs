@@ -2,6 +2,7 @@
 using E_Commerce.Identity.Domain.Model.UserAggre;
 using E_Commerce.Identity.Domain.Model.UserRoleAggre;
 using E_Commerce.Identity.Infrastructure.Data;
+using E_Commerce.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -23,7 +24,7 @@ namespace E_Commerce.Api.Extension
                 config.Password.RequireUppercase = false;
                 config.Password.RequiredLength = 3;
             })
-                    .AddEntityFrameworkStores<ApplicationUserContext>();
+                    .AddEntityFrameworkStores<ApplicationContext>();
 
             Services.AddAuthentication(Options =>
             {
