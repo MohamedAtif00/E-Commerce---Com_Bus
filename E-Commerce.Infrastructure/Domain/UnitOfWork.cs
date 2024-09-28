@@ -2,8 +2,10 @@
 using E_Commerce.Domain.Model.AdministrationAggre;
 using E_Commerce.Domain.Model.BasketAggre;
 using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Domain.Model.ContactAggre;
 using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.ProductAggre;
+using E_Commerce.Domain.Model.ShipmentInformationAggre;
 using E_Commerce.Domain.Model.SpecificationAggre;
 using E_Commerce.Domain.Model.SuperCategoryAggre;
 using E_Commerce.Infrastructure.Data;
@@ -16,7 +18,7 @@ namespace E_Commerce.Infrastructure.Domain
     {
         public ApplicationContext _context { get; }
 
-        public UnitOfWork(ApplicationContext context, IProductRepository productRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository, ISuperCategoryRepository superCategoryRepository, ISpecificationRepository specificationRepository, IImageRepository imageRepository, IAdministrationRepository administrationRepository, ISpecialProductsRepository specialProductsRepository)
+        public UnitOfWork(ApplicationContext context, IProductRepository productRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository, ISuperCategoryRepository superCategoryRepository, ISpecificationRepository specificationRepository, IImageRepository imageRepository, IAdministrationRepository administrationRepository, ISpecialProductsRepository specialProductsRepository, IContactRepository contactRepository, IShipmentInformationRepository shipmentInformationRepository)
         {
             _context = context;
             ProductRepository = productRepository;
@@ -27,6 +29,8 @@ namespace E_Commerce.Infrastructure.Domain
             ImageRepository = imageRepository;
             AdministrationRepository = administrationRepository;
             SpecialProductsRepository = specialProductsRepository;
+            this.contactRepository = contactRepository;
+            ShipmentInformationRepository = shipmentInformationRepository;
         }
 
         public IProductRepository ProductRepository { get; set; }
@@ -38,8 +42,8 @@ namespace E_Commerce.Infrastructure.Domain
         public ISpecificationRepository SpecificationRepository { get; set; }
         public IAdministrationRepository AdministrationRepository { get; set; }
         public ISpecialProductsRepository SpecialProductsRepository { get; set; }
-
-
+        public IContactRepository contactRepository { get; set; }
+        public IShipmentInformationRepository ShipmentInformationRepository { get; set; }
 
 
         public async Task<int> save()

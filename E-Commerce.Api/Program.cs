@@ -5,6 +5,9 @@ using E_Commerce.Api.Extension;
 using E_Commerce.Api.seed;
 using E_Commerce.Application;
 using E_Commerce.Domain.Model.CategoryAggre.Converters;
+using E_Commerce.Domain.Model.ContactAggre;
+using E_Commerce.Domain.Model.ContactAggre.Converters;
+using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.OrderAggre.Converters;
 using E_Commerce.Domain.Model.ProductAggre.Converters;
 using E_Commerce.Identity.Infrastructure;
@@ -77,6 +80,7 @@ namespace E_Commerce.Api
                     op.SerializerSettings.Converters.Add(new OrderConverter.OrderIdJsonConverter());
                     op.SerializerSettings.Converters.Add(new CategoryConverter.CategoryIdJsonConverter());
                     op.SerializerSettings.Converters.Add(new ImageConverter.ImageIdJsonConverter());
+                    op.SerializerSettings.Converters.Add(new ContactConverter.ContactIdJsonConverter());
                 });
             builder.Services.AddSwaggerGen(c => 
             {
@@ -85,6 +89,7 @@ namespace E_Commerce.Api
                 c.SchemaFilter<OrderIdSchemaFilter>();
                 c.SchemaFilter<CategoryIdSchemaFilter>();
                 c.SchemaFilter<ImageIdSchemaFilter>();
+                c.SchemaFilter<ContactIdFilter>();
                 c.OperationFilter<SwaggerFileOperationFilter>();
             });
 
@@ -103,8 +108,8 @@ namespace E_Commerce.Api
             app.UseAuthorization(); // Authorization should be after routing and CORS
 
             // Enable Swagger and Swagger UI
-            //app.UseSwagger();
-            //app.UseSwaggerUI();
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             // Map controller routes directly
             app.MapControllers();

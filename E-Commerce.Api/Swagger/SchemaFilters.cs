@@ -1,6 +1,8 @@
 ﻿using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Domain.Model.ContactAggre;
 using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.ProductAggre;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -106,6 +108,17 @@ namespace E_Commerce.Api.Swagger
             public void Apply(OpenApiSchema schema, SchemaFilterContext context)
             {
                 if (context.Type == typeof(ImageId))
+                {
+                    schema.Type = "string";
+                    schema.Format = "uuid";
+                }
+            }
+        }
+        public class ContactIdFilter : ISchemaFilter
+        {
+            public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+            {
+                if (context.Type == typeof(ContactId))
                 {
                     schema.Type = "string";
                     schema.Format = "uuid";

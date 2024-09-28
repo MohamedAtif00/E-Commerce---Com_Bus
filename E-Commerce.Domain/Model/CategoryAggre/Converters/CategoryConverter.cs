@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Domain.Model.ProductAggre;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -59,15 +60,22 @@ namespace E_Commerce.Domain.Model.CategoryAggre.Converters
             public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
             {
                 // Attempt to convert from string to ProductId
+
+                
                 var stringValue = value as string;
                 if (!string.IsNullOrEmpty(stringValue) && Guid.TryParse(stringValue, out var guid))
                 {
                     return CategoryId.Create(guid);
                 }
 
+                
+
                 // Fallback to the base class conversion method
                 return base.ConvertFrom(context, culture, value);
             }
         }
+
+
     }
 }
+

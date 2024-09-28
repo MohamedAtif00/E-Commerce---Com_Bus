@@ -1,13 +1,7 @@
 ﻿using Ardalis.Result;
 using E_Commerce.Domain.Common;
-using E_Commerce.Domain.Model.OrderAggre;
-using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Application;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery
 {
@@ -39,7 +33,15 @@ namespace E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery
                     products.Add(Dto);
                 }
 
-                GetSingleOrderDto OrderDto = new(order.Id,order.CustomerName,order.PhoneNumber,order.CreatedDate,order.Address,products,order.TotalPrice);
+                GetSingleOrderDto OrderDto = new(order.Id,
+                                                 order.CustomerName,
+                                                 order.PhoneNumber,
+                                                 order.CreatedDate,
+                                                 order.Address,
+                                                 products,
+                                                 order.TotalPrice,
+                                                 order.State.ToString()
+                                                 );
 
 
                 return Result.Success(OrderDto);

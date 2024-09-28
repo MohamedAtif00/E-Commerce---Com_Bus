@@ -45,7 +45,14 @@ namespace E_Commerce.Api.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get([FromQuery] ProductQuery query)
         {
-            var result = await _mediator.Send(new GetAllProductsQuery(query.pageNumber, 8, query.sortColumn, query.searchTerm));
+            var result = await _mediator.Send(new GetAllProductsQuery(query.pageNumber,
+                                                                      8,
+                                                                      query.sortColumn,
+                                                                      query.searchTerm,
+                                                                      query.startPrice,
+                                                                      query.endPrice,
+                                                                      query.categoryIds
+                                                                      ));
 
             return Ok(result);
         }
@@ -196,8 +203,16 @@ namespace E_Commerce.Api.Controllers
         //}
     }
 
-    public record ProductQuery(int pageNumber,string? searchTerm,string? sortColumn);
+    public record ProductQuery(int pageNumber,
+                               string? searchTerm,
+                               string? sortColumn,
+                               decimal? startPrice,
+                               decimal? endPrice,
+                               List<CategoryId>? categoryIds
+                               );
+
     public record AddProductImage( IFormFile file,string name);
+
     public record UpdateProduct(string name,string description,int stockQuantity,decimal price,int discount,CategoryId CategoryId,bool hasPercentage = false);
     //public record AddProductImagesDto(List<AddProductImages> images);
 }

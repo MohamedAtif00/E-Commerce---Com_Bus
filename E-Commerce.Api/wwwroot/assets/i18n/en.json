@@ -118,5 +118,29 @@
         "ADDCATEGORY":"Add Category",
         "CATEGORYNAME":"Category Name",
         "CATEGORYNAMESHOULDBEUNIQUE":"Category Name Should Be Unique"
+    },"ODRERDETAILS":{
+        "ORDERDETIALS":"Order Details",
+        "DASHBOARD":"Dashboard",
+        "ORDERLIST":"Order List",
+        "ORDERSUMMARY":"Order Summary",
+        "DATEADDED":"Date Added",
+        "PAYMENTMETHOD":"Payment Method",
+        "CASH":"Cash",
+        "CUSTOMERDETAILS":"Customer Details",
+        "CUSTOMER":"Cusmtomer",
+        "EMAIL":"Email",
+        "PHONE":"Phone",
+        "SHIPPINGADDRESS":"Shipping Address",
+        "STATE":"State",
+        "CITY":"City",
+        "STREET":"Street",
+        "ORDER":"Order",
+        "PRODUCT":"Product",
+        "QUANTITY":"Quantity",
+        "UNITPRICE":"Unit Price",
+        "TOTAL":"Total",
+        "DELIVERYDATE":"Delivery Date",
+        "GRANDTOTAL":"Grand Total"
+
     }
 }

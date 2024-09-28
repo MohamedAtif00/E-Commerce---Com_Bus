@@ -123,6 +123,32 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.ToTable("categories");
                 });
 
+            modelBuilder.Entity("E_Commerce.Domain.Model.ContactAggre.Contact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("contacts");
+                });
+
             modelBuilder.Entity("E_Commerce.Domain.Model.CustomerAggre.Customer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -171,20 +197,45 @@ namespace E_Commerce.Infrastructure.Migrations
                         {
                             b1.IsRequired();
 
+                            b1.Property<string>("apartment")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Address_Apartment");
+
+                            b1.Property<int>("buildingNumber")
+                                .HasColumnType("int")
+                                .HasColumnName("Address_BuildingNumber");
+
                             b1.Property<string>("city")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_City");
+
+                            b1.Property<string>("cityId")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("firstLine")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Address_FirstLine");
+
+                            b1.Property<int>("floor")
+                                .HasColumnType("int")
+                                .HasColumnName("Address_Floor");
+
+                            b1.Property<string>("secondLine")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Address_SecondLine");
 
                             b1.Property<string>("state")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_State");
 
-                            b1.Property<string>("street")
+                            b1.Property<string>("stateId")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Address_Street");
+                                .HasColumnType("nvarchar(max)");
                         });
 
                     b.HasKey("Id");
@@ -237,7 +288,7 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<DateTime>("_CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 8, 26, 13, 53, 30, 54, DateTimeKind.Local).AddTicks(9004));
+                        .HasDefaultValue(new DateTime(2024, 9, 28, 0, 22, 45, 710, DateTimeKind.Local).AddTicks(3032));
 
                     b.Property<DateTime?>("_UpdatedAt")
                         .HasColumnType("datetime2");
@@ -318,6 +369,27 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Review");
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Model.ShipmentInformationAggre.ShipmentInformation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShipmentInformation");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.SpecificationAggre.Options", b =>
@@ -651,6 +723,66 @@ namespace E_Commerce.Infrastructure.Migrations
 
                     b.Navigation("rating")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Model.ShipmentInformationAggre.ShipmentInformation", b =>
+                {
+                    b.OwnsMany("E_Commerce.Domain.Model.ShipmentInformationAggre.PickupAddress", "pickupAddresses", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("ShipmentInformationId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("apartment")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int?>("buildingNumber")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("city")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("cityId")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("firstLine")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int?>("floor")
+                                .HasColumnType("int");
+
+                            b1.Property<bool>("isActive")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("secondLine")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("state")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("stateId")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("ShipmentInformationId");
+
+                            b1.ToTable("PickupAddress");
+
+                            b1.WithOwner("ShipmentInformation")
+                                .HasForeignKey("ShipmentInformationId");
+
+                            b1.Navigation("ShipmentInformation");
+                        });
+
+                    b.Navigation("pickupAddresses");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.SpecificationAggre.Options", b =>

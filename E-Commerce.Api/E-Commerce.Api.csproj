@@ -33,4 +33,19 @@
     <Folder Include="wwwroot\Upload\ProductImage\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\assets\img\dashboard\header\aside.svg" />
+    <None Include="wwwroot\assets\img\dashboard\header\handbag-svgrepo-com.svg" />
+    <None Include="wwwroot\assets\img\dashboard\order-details\cash-svgrepo-com.svg" />
+    <None Include="wwwroot\assets\img\dashboard\order-details\ecm006.svg" />
+    <None Include="wwwroot\assets\img\dashboard\ordre-table\eyes-svgrepo-com.svg" />
+    <None Include="wwwroot\assets\img\dashboard\ordre-table\face-mask-mask-svgrepo-com.svg" />
+    <None Include="wwwroot\assets\img\dashboard\ordre-table\hair-cream-cream-svgrepo-com.svg" />
+    <None Include="wwwroot\assets\img\dashboard\ordre-table\lips-svgrepo-com.svg" />
+    <None Include="wwwroot\assets\img\dashboard\ordre-table\skincare-svgrepo-com.svg" />
+    <None Include="wwwroot\assets\img\dashboard\product\blank-image.svg" />
+    <None Include="wwwroot\assets\img\dashboard\product\edit-svgrepo-com.svg" />
+    <None Include="wwwroot\assets\slick.js" />
+  </ItemGroup>
+
 </Project>

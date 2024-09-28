@@ -1,8 +1,10 @@
 ﻿using E_Commerce.Domain.Model.AdministrationAggre;
 using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Domain.Model.ContactAggre;
 using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.Domain.Model.ProductOptionAggre;
+using E_Commerce.Domain.Model.ShipmentInformationAggre;
 using E_Commerce.Domain.Model.SpecificationAggre;
 using E_Commerce.Domain.Model.SuperCategoryAggre;
 using E_Commerce.Identity.Infrastructure.Data;
@@ -30,6 +32,8 @@ namespace E_Commerce.Infrastructure.Data
         public DbSet<Specification> specifications { get; set; }
         public DbSet<SuperCategory> superCategories { get; set; }
         public DbSet<Administration> administrations { get; set; }
+        public DbSet<ShipmentInformation> ShipmentInformation { get; set; }
+        public DbSet<Contact> contacts { get; set; }
         public DbSet<SpecialProducts> SpecialProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

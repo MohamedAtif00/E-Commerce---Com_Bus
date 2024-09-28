@@ -61,9 +61,11 @@ namespace E_Commerce.Domain.Model.OrderAggre
             this.orderItems.AddRange(orderItems);
         }
     }
+
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum OrderState { 
         Pending,
+        Accepted,
         Expired,
         Failed,
         Cancelled,

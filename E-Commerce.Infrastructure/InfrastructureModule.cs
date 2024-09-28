@@ -2,18 +2,22 @@
 using E_Commerce.Domain.Common;
 using E_Commerce.Domain.Model.AdministrationAggre;
 using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Domain.Model.ContactAggre;
 using E_Commerce.Domain.Model.CustomerAggre;
 using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.ProductAggre;
+using E_Commerce.Domain.Model.ShipmentInformationAggre;
 using E_Commerce.Domain.Model.SpecificationAggre;
 using E_Commerce.Domain.Model.SuperCategoryAggre;
 using E_Commerce.Infrastructure.Data;
 using E_Commerce.Infrastructure.Domain;
 using E_Commerce.Infrastructure.Domain.AdministrationConfig;
 using E_Commerce.Infrastructure.Domain.CategoryConfig;
+using E_Commerce.Infrastructure.Domain.ContactConfig;
 using E_Commerce.Infrastructure.Domain.CustomerConfig;
 using E_Commerce.Infrastructure.Domain.OrderConfig;
 using E_Commerce.Infrastructure.Domain.productConfig;
+using E_Commerce.Infrastructure.Domain.ShipmentInformationConfig;
 using E_Commerce.Infrastructure.Domain.SpecialProductsConfig;
 using E_Commerce.Infrastructure.Domain.SpecificationConfig;
 using E_Commerce.Infrastructure.Domain.SuperCategoryConfig;
@@ -45,6 +49,8 @@ namespace E_Commerce.Infrastructure
             builder.RegisterType<ImageRepository>().As<IImageRepository>();
             builder.RegisterType<AdministrationRepository>().As<IAdministrationRepository>();
             builder.RegisterType<SpecialProductsRepository>().As<ISpecialProductsRepository>();
+            builder.RegisterType<ContactRepository>().As<IContactRepository>();
+            builder.RegisterType<ShipmentInformationRepository>().As<IShipmentInformationRepository>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
             builder.Register(context =>

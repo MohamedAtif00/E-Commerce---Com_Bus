@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result;
 using E_Commerce.Application.Helper;
 using E_Commerce.Domain.Common;
+using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.SharedKernal.Application;
 using System;
@@ -26,12 +27,28 @@ namespace E_Commerce.Application.Query.ProductQuery.GetAllProducts
             try
             {
                 var productsQuery = await _unitOfWork.ProductRepository.GetPages();
-
                 if (request.searchTerm != null)
                 {
                     productsQuery = productsQuery.Where(p =>
                         p._name.Contains(request.searchTerm)
                     );
+                }
+
+                // Apply price range filter if provided
+                if (request.startPrice != null)
+                {
+                    productsQuery = productsQuery.Where(p => p._price._total >= request.startPrice);
+                }
+
+                if (request.endPrice != null)
+                {
+                    productsQuery = productsQuery.Where(p => p._price._total <= request.endPrice);
+                }
+
+                if (request.CategoryIds != null && request.CategoryIds.Count() != 0)
+                {
+
+                    productsQuery = productsQuery.Where(p => request.CategoryIds.Contains(p.categoryId));
                 }
 
                 Expression<Func<Product, object>> keySelector = request.sortColumn?.ToLower() switch

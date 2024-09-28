@@ -38,12 +38,14 @@ namespace E_Commerce.Infrastructure.Domain.OrderConfig
 
             builder.ComplexProperty(x =>x.Address,a => 
             {
-                a.Property(a => a.street)
-                .IsRequired()
-                .HasColumnName("Address_Street");
 
                 a.Property(a => a.city).IsRequired().HasColumnName("Address_City");
                 a.Property(a => a.state).IsRequired().HasColumnName("Address_State");
+                a.Property(a => a.firstLine).IsRequired().HasColumnName("Address_FirstLine");
+                a.Property(a => a.secondLine).HasColumnName("Address_SecondLine");
+                a.Property(a => a.buildingNumber).IsRequired().HasColumnName("Address_BuildingNumber");
+                a.Property(a => a.floor).IsRequired().HasColumnName("Address_Floor");
+                a.Property(a => a.apartment).IsRequired().HasColumnName("Address_Apartment");
             });
         }
     }

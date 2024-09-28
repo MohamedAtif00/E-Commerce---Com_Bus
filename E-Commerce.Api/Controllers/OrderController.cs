@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Application.Command.OrderCommand.AddOrder;
+using E_Commerce.Application.Command.OrderCommand.ChangeStatus;
 using E_Commerce.Application.DTOs;
 using E_Commerce.Application.Query.OrderQuery.GetAllOrdersQuery;
 using E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery;
@@ -37,6 +38,18 @@ namespace E_Commerce.Api.Controllers
             return Ok(result);
         }
 
+        // GET: api/orders/OrderStates
+        [HttpGet("OrderStates")]
+        public ActionResult<IEnumerable<OrderStateDto>> GetOrderStates()
+        {
+            var orderStates = Enum.GetValues(typeof(OrderState))
+                                  .Cast<OrderState>()
+                                  .Select(state => new OrderStateDto(state.ToString(),(int)state))
+                                  .ToList();
+
+            return Ok(orderStates);
+        }
+
 
         // POST api/<OrderController>
         [HttpPost]
@@ -59,6 +72,14 @@ namespace E_Commerce.Api.Controllers
         {
         }
 
+        [HttpPost("ChangeState")]
+        public async Task<IActionResult> ChangeState(ChangeStateDto change)
+        {
+            var result = await _mediator.Send(new ChangeStateCommand(change.id,change.state));
+
+            return Ok(result);  
+        }
+
         // DELETE api/<OrderController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
@@ -66,4 +87,6 @@ namespace E_Commerce.Api.Controllers
         }
     }
     public record OrderQuery(int pageNumber, string? searchTerm, string? sortColumn,bool des = false);
+    public record OrderStateDto(string Name,int Value);
+    public record ChangeStateDto(OrderId id,OrderState state);
 }
