@@ -23,6 +23,14 @@ namespace E_Commerce.Application.Command.OrderCommand.AddOrder
         {
             try
             {
+
+                Coupon? coupon = null;
+                if (request.order.couponCode != null)
+                {
+                    coupon = await _unitOfWork.CouponRepository.GetCouponByName(request.order.couponCode);
+                    coupon.UseCoupon();
+                }
+
                 // Create the order from the request
                 var order = Order.Create(request.order.CustomerId, request.order.Address, request.order.CustomerName, request.order.PhoneNumber,0);
 
@@ -46,7 +54,7 @@ namespace E_Commerce.Application.Command.OrderCommand.AddOrder
                 var totalOrderPrice = orderItems.Sum(x => x._total);
 
                 // Update the total price of the order
-                order.TotalPrice = totalOrderPrice;
+                order.TotalPrice = coupon != null? totalOrderPrice - (totalOrderPrice * coupon.Discount)/100 : totalOrderPrice;
 
                 // Add the order items to the order
                 order.AddRangeOrderItem(orderItems);

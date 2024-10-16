@@ -1,5 +1,4 @@
-﻿using E_Commerce.Domain.Model.SuperCategoryAggre;
-using E_Commerce.SharedKernal.Application;
+﻿using E_Commerce.SharedKernal.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;

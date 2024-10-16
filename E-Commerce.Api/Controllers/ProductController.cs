@@ -15,6 +15,7 @@ using E_Commerce.Application.Query.ProductQuery.GetProductImageQuery;
 using E_Commerce.Application.Command.ProductCommands.UpdateProductDetails;
 using E_Commerce.Application.Command.ProductCommands.DeleteMasterImageCommand;
 using E_Commerce.Domain.Model.CategoryAggre;
+using E_Commerce.Application.Command.ProductCommands.AddReviewCommand;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -78,7 +79,7 @@ namespace E_Commerce.Api.Controllers
         [HttpPut("{productId}")]
         public async Task<IActionResult> Put(ProductId productId, [FromBody] UpdateProduct value)
         {
-            var result = await _mediator.Send(new UpdateProductDetailsCommand(productId, value.name, value.description, value.stockQuantity,value.price,value.discount, value.CategoryId,_webHostEnvironment.WebRootPath,value.hasPercentage));
+            var result = await _mediator.Send(new UpdateProductDetailsCommand(productId, value.name,value.nameArab, value.description,value.descriptionArab, value.stockQuantity,value.price,value.discount, value.CategoryId,_webHostEnvironment.WebRootPath,value.hasPercentage));
 
             return Ok(result);
         }
@@ -117,6 +118,14 @@ namespace E_Commerce.Api.Controllers
             }
 
             return Ok("Image uploaded successfully.");
+        }
+
+        [HttpPost("AddReview")]
+        public async Task<IActionResult> AddReview([FromBody] AddReviewCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
         }
 
 
@@ -188,6 +197,7 @@ namespace E_Commerce.Api.Controllers
             return NotFound();
         }
 
+
         // PUT api/<ProductController>/5
         //[HttpPut("{id}")]
         //public void Put(ProductId id, [FromBody] string value)
@@ -213,6 +223,6 @@ namespace E_Commerce.Api.Controllers
 
     public record AddProductImage( IFormFile file,string name);
 
-    public record UpdateProduct(string name,string description,int stockQuantity,decimal price,int discount,CategoryId CategoryId,bool hasPercentage = false);
+    public record UpdateProduct(string name,string nameArab,string description,string descriptionArab,int stockQuantity,decimal price,int discount,CategoryId CategoryId,bool hasPercentage = false);
     //public record AddProductImagesDto(List<AddProductImages> images);
 }

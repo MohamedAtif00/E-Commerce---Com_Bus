@@ -19,7 +19,7 @@ namespace E_Commerce.Application.DTOs
         {
             public OrderId id { get; set; }
 
-            public GetAllOrdersDTO(OrderId id, string state, DateTime createdDate, string customerName, Address address, string phoneNumber, CustomerId customerId, decimal totalPrice)
+            public GetAllOrdersDTO(OrderId id, string state, DateTime createdDate, string customerName, Address address, string phoneNumber, CustomerId customerId, decimal totalPrice, string trackingNumber)
             {
                 this.id = id;
                 State = state;
@@ -28,6 +28,7 @@ namespace E_Commerce.Application.DTOs
                 this.phoneNumber = phoneNumber;
                 CustomerId = customerId;
                 this.totalPrice = totalPrice;
+                this.trackingNumber = trackingNumber;
             }
             [JsonConverter(typeof(JsonStringEnumConverter))]
             public string State { get; set; }
@@ -37,8 +38,9 @@ namespace E_Commerce.Application.DTOs
             public string phoneNumber { get; set; }
             public CustomerId CustomerId { get; set; }
             public decimal totalPrice { get; set; }
+            public string trackingNumber { get; set; }
         }
-        public record AddOrderDTO(List<OrderItemDTO>  OrderItemDTOs, Address Address, string CustomerName, string PhoneNumber, CustomerId CustomerId = null);
+        public record AddOrderDTO(List<OrderItemDTO>  OrderItemDTOs, Address Address, string CustomerName, string PhoneNumber,string? couponCode, CustomerId? CustomerId = null);
         public record AddressDTO( );
 
         public static OrderItemDTO OrderItem(ProductId productId, int quantity)

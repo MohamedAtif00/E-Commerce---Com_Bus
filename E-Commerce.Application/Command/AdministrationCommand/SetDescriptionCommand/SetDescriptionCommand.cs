@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Command.AdministrationCommand.SetDescriptionCommand
 {
-    public record SetDescriptionCommand(string title_eng,string title_arb,string desc_eng,string desc_arb):ICommand;
+    public record SetDescriptionCommand(string title_eng,string title_arb,string desc_eng,string desc_arb,string marquee_eng,string marquee_arb):ICommand;
     
     
 }

@@ -30,14 +30,16 @@ namespace E_Commerce.Application.Query.AdministrationQuery.GetAdministration
                 {
                     var administration = Administration.Create();
                     administration.UpdateWebsiteColor("#FBD5D5");
-                    return Result.Success(new GetAdministrationDto(administration._websiteColor,null,null,null,null));
+                    return Result.Success(new GetAdministrationDto(administration._websiteColor,null,null,null,null,null,null));
                 }
 
                 var dto = new GetAdministrationDto(admin._websiteColor,
                                                    admin._welcomeMessage.Title_Eng,
                                                    admin._welcomeMessage.Title_Arb,
                                                    admin._welcomeMessage.Desc_Eng,
-                                                   admin._welcomeMessage.Desc_Arb);
+                                                   admin._welcomeMessage.Desc_Arb,
+                                                   admin._description.Marquee_Eng,
+                                                   admin._description.Marquee_Arb);
 
                 return Result.Success(dto);
             }

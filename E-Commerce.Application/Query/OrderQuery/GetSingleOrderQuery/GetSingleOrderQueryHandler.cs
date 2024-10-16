@@ -40,7 +40,8 @@ namespace E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery
                                                  order.Address,
                                                  products,
                                                  order.TotalPrice,
-                                                 order.State.ToString()
+                                                 order.State.ToString(),
+                                                 order.TrackingNumber
                                                  );
 
 

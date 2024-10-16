@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery
 {
-    public record GetSingleOrderDto(OrderId OrderId,string customerName,string phoneNumber,DateTime createdDate,Address Address,List<OrderItemDto> Products,decimal total,string state);
+    public record GetSingleOrderDto(OrderId OrderId,string customerName,string phoneNumber,DateTime createdDate,Address Address,List<OrderItemDto> Products,decimal total,string state,string? trackingNumber);
     
     public record OrderItemDto(ProductId ProductId,string productName,int quantity,decimal PriceForUnit,decimal total);
    

@@ -28,7 +28,15 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
 
             builder.Property(x => x._description)
                 .IsRequired()
-                .HasMaxLength(500); // Example: Set maximum length for description
+                 .HasColumnType("NVARCHAR(MAX)"); // Example: Set maximum length for description
+
+            builder.OwnsMany(x => x.reviews,conf => { 
+                conf.HasKey(x => x.Id);
+                conf.Property(x => x.Id).HasConversion(x => x.value,value => ReviewId.Create(value)) ;
+
+                conf.Property(x => x.Comment).HasColumnName("Comment") ;
+                conf.Property(x => x.rating).HasColumnName("Rating");
+            });
 
 
             builder.Property<uint>("Version").IsRowVersion();

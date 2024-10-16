@@ -42,6 +42,12 @@ namespace E_Commerce.Infrastructure.Migrations
                             b1.Property<string>("Desc_Eng")
                                 .HasColumnType("nvarchar(max)");
 
+                            b1.Property<string>("Marquee_Arb")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Marquee_Eng")
+                                .HasColumnType("nvarchar(max)");
+
                             b1.Property<string>("Title_Arb")
                                 .HasColumnType("nvarchar(max)");
 
@@ -98,10 +104,21 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SuperCategoryId")
+                    b.Property<bool>("_visible")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("categories");
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Model.CategoryAggre.ChildCategory", b =>
+                {
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("_name")
@@ -111,16 +128,19 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<Guid?>("_parentCategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("_parentChildCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("_visible")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("_parentCategoryId");
 
-                    b.HasIndex("SuperCategoryId");
+                    b.HasIndex("_parentChildCategoryId");
 
-                    b.ToTable("categories");
+                    b.ToTable("ChildCategory");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.ContactAggre.Contact", b =>
@@ -167,9 +187,44 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.ToTable("Customer");
                 });
 
+            modelBuilder.Entity("E_Commerce.Domain.Model.OrderAggre.Coupon", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UsageCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsageLimit")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("coupons");
+                });
+
             modelBuilder.Entity("E_Commerce.Domain.Model.OrderAggre.Order", b =>
                 {
                     b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Check")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CouponId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -189,6 +244,9 @@ namespace E_Commerce.Infrastructure.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("_customerId")
                         .HasColumnType("uniqueidentifier");
@@ -240,6 +298,8 @@ namespace E_Commerce.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CouponId");
+
                     b.ToTable("orders");
                 });
 
@@ -288,20 +348,27 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<DateTime>("_CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 28, 0, 22, 45, 710, DateTimeKind.Local).AddTicks(3032));
+                        .HasDefaultValue(new DateTime(2024, 10, 15, 11, 27, 52, 808, DateTimeKind.Local).AddTicks(5357));
 
                     b.Property<DateTime?>("_UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("_description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("NVARCHAR(MAX)");
+
+                    b.Property<string>("_description_arab")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("_name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("_name_arab")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("_stockQuantity")
                         .HasColumnType("int");
@@ -349,26 +416,6 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("productsOption");
-                });
-
-            modelBuilder.Entity("E_Commerce.Domain.Model.ReviewAggre.Review", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("_customerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("productId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.ShipmentInformationAggre.ShipmentInformation", b =>
@@ -426,20 +473,6 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("specifications");
-                });
-
-            modelBuilder.Entity("E_Commerce.Domain.Model.SuperCategoryAggre.SuperCategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("superCategories");
                 });
 
             modelBuilder.Entity("E_Commerce.Identity.Domain.Model.UserAggre.User", b =>
@@ -647,19 +680,29 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("E_Commerce.Domain.Model.CategoryAggre.Category", b =>
+            modelBuilder.Entity("E_Commerce.Domain.Model.CategoryAggre.ChildCategory", b =>
                 {
-                    b.HasOne("E_Commerce.Domain.Model.CategoryAggre.Category", null)
+                    b.HasOne("E_Commerce.Domain.Model.CategoryAggre.Category", "category")
                         .WithMany("ChildCategories")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("_parentCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("E_Commerce.Domain.Model.SuperCategoryAggre.SuperCategory", null)
-                        .WithMany("categories")
-                        .HasForeignKey("SuperCategoryId");
+                    b.HasOne("E_Commerce.Domain.Model.CategoryAggre.ChildCategory", "childCategory")
+                        .WithMany("ChildCategories")
+                        .HasForeignKey("_parentChildCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("category");
+
+                    b.Navigation("childCategory");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.OrderAggre.Order", b =>
                 {
+                    b.HasOne("E_Commerce.Domain.Model.OrderAggre.Coupon", "Coupon")
+                        .WithMany()
+                        .HasForeignKey("CouponId");
+
                     b.OwnsMany("E_Commerce.Domain.Model.OrderAggre.OrderItem", "_orderItems", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -689,6 +732,8 @@ namespace E_Commerce.Infrastructure.Migrations
                             b1.Navigation("_order");
                         });
 
+                    b.Navigation("Coupon");
+
                     b.Navigation("_orderItems");
                 });
 
@@ -703,26 +748,39 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("E_Commerce.Domain.Model.ReviewAggre.Review", b =>
+            modelBuilder.Entity("E_Commerce.Domain.Model.ProductAggre.Product", b =>
                 {
-                    b.OwnsOne("E_Commerce.Domain.Model.ReviewAggre.Rating", "rating", b1 =>
+                    b.OwnsMany("E_Commerce.Domain.Model.ProductAggre.Review", "reviews", b1 =>
                         {
-                            b1.Property<Guid>("ReviewId")
+                            b1.Property<Guid>("Id")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<double>("Value")
-                                .HasColumnType("float");
+                            b1.Property<string>("Comment")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Comment");
 
-                            b1.HasKey("ReviewId");
+                            b1.Property<bool>("IsAllowed")
+                                .HasColumnType("bit");
+
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("rating")
+                                .HasColumnType("int")
+                                .HasColumnName("Rating");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("ProductId");
 
                             b1.ToTable("Review");
 
                             b1.WithOwner()
-                                .HasForeignKey("ReviewId");
+                                .HasForeignKey("ProductId");
                         });
 
-                    b.Navigation("rating")
-                        .IsRequired();
+                    b.Navigation("reviews");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.ShipmentInformationAggre.ShipmentInformation", b =>
@@ -850,6 +908,11 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Navigation("ChildCategories");
                 });
 
+            modelBuilder.Entity("E_Commerce.Domain.Model.CategoryAggre.ChildCategory", b =>
+                {
+                    b.Navigation("ChildCategories");
+                });
+
             modelBuilder.Entity("E_Commerce.Domain.Model.ProductAggre.Product", b =>
                 {
                     b.Navigation("images");
@@ -858,11 +921,6 @@ namespace E_Commerce.Infrastructure.Migrations
             modelBuilder.Entity("E_Commerce.Domain.Model.SpecificationAggre.Specification", b =>
                 {
                     b.Navigation("options");
-                });
-
-            modelBuilder.Entity("E_Commerce.Domain.Model.SuperCategoryAggre.SuperCategory", b =>
-                {
-                    b.Navigation("categories");
                 });
 #pragma warning restore 612, 618
         }

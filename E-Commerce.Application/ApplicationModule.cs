@@ -34,6 +34,8 @@ namespace E_Commerce.Application
             builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve))
                 .As<IMapper>()
                 .InstancePerLifetimeScope();
+
+
         }
     }
 }

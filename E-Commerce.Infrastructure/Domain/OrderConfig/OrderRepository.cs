@@ -36,6 +36,10 @@ namespace E_Commerce.Infrastructure.Domain.OrderConfig
             return await _context.orders.Where(x => x == order).FirstOrDefaultAsync();
         }
 
+        public async Task<List<Order>> GetOrdersInProcess()
+        {
+            return await _context.orders.Where(x => x.TrackingNumber != null && x.State != OrderState.Cancelled && x.State != OrderState.Delivered && x.State != OrderState.Failed).ToListAsync();
+        }
 
     }
 }

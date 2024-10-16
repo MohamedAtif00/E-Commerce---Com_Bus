@@ -10,6 +10,6 @@ namespace E_Commerce.Application.DTOs
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-
+        public List<CategoryDTO> ChildsCategories { get; set; }
     }
 }

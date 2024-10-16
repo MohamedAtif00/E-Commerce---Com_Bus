@@ -12,8 +12,10 @@ using E_Commerce.Domain.Model.OrderAggre.Converters;
 using E_Commerce.Domain.Model.ProductAggre.Converters;
 using E_Commerce.Identity.Infrastructure;
 using E_Commerce.Infrastructure;
+using E_Commerce.Infrastructure.Configuration.Quartz;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Quartz;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using static E_Commerce.Api.Swagger.SchemaFilters;
@@ -55,6 +57,11 @@ namespace E_Commerce.Api
                      .AllowAnyMethod();
                 });
             });
+
+            
+
+
+            builder.Services.AddHttpClient();
 
             builder.Services.AddMvc()
                 .AddJsonOptions(op => 
@@ -100,6 +107,7 @@ namespace E_Commerce.Api
             app.UseHttpsRedirection(); // Redirect HTTP to HTTPS
 
             app.UseStaticFiles(); // Serve static files (like Angular files in wwwroot)
+
 
             app.UseRouting(); // Enables routing
 

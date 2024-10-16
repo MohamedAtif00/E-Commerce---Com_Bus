@@ -33,6 +33,8 @@ namespace E_Commerce.Application.Command.AdministrationCommand.ChangeTitleComman
                     newAdmin._welcomeMessage = welcome;
                     newAdmin._heroImage = heroimage;
                     newAdmin._welcomeMessage = welcome;
+                    newAdmin._description.Marquee_Eng = request.marquee_Eng;
+                    newAdmin._description.Marquee_Arb = request.marquee_Arb;
                     await _unitOfWork.AdministrationRepository.Add(newAdmin);
 
                     saving = await _unitOfWork.save();
@@ -42,7 +44,8 @@ namespace E_Commerce.Application.Command.AdministrationCommand.ChangeTitleComman
                 }
 
                 admin._welcomeMessage = welcome;
-
+                admin._description.Marquee_Eng = request.marquee_Eng;
+                admin._description.Marquee_Arb = request?.marquee_Arb;
                 await _unitOfWork.AdministrationRepository.Update(admin);
 
                 saving = await _unitOfWork.save();

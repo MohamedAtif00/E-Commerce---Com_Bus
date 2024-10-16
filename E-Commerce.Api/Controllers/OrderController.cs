@@ -1,7 +1,11 @@
-﻿using E_Commerce.Application.Command.OrderCommand.AddOrder;
+﻿using E_Commerce.Application.Command.OrderCommand.AddCoupon;
+using E_Commerce.Application.Command.OrderCommand.AddOrder;
 using E_Commerce.Application.Command.OrderCommand.ChangeStatus;
+using E_Commerce.Application.Command.OrderCommand.UpdateOrder;
 using E_Commerce.Application.DTOs;
+using E_Commerce.Application.Query.OrderQuery.GetAllCouponQuery;
 using E_Commerce.Application.Query.OrderQuery.GetAllOrdersQuery;
+using E_Commerce.Application.Query.OrderQuery.GetSingleCouponQuery;
 using E_Commerce.Application.Query.OrderQuery.GetSingleOrderQuery;
 using E_Commerce.Domain.Model.OrderAggre;
 using MediatR;
@@ -49,6 +53,20 @@ namespace E_Commerce.Api.Controllers
 
             return Ok(orderStates);
         }
+        [HttpGet("GetAllCoupons")]
+        public async Task<IActionResult> GetAllCoupons()
+        {
+            var result = await _mediator.Send(new GetAllCouponQuery());
+
+            return Ok(result);
+        }
+        [HttpGet("GetCoupon")]
+        public async Task<IActionResult> GetCoupon( string code)
+        {
+            var result = await _mediator.Send(new GetSingleCouponQuery(code));
+
+            return Ok(result);
+        }
 
 
         // POST api/<OrderController>
@@ -66,11 +84,14 @@ namespace E_Commerce.Api.Controllers
 
         }
 
-        // PUT api/<OrderController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("AddCoupon")]
+        public async Task<IActionResult> AddCoupon(AddCouponCommand request)
         {
+            var result = await _mediator.Send(request);
+            return Ok(result);
         }
+
+
 
         [HttpPost("ChangeState")]
         public async Task<IActionResult> ChangeState(ChangeStateDto change)
@@ -80,6 +101,13 @@ namespace E_Commerce.Api.Controllers
             return Ok(result);  
         }
 
+        [HttpPost("UpdateOrder")]
+        public async Task<IActionResult> UpdateOrder(UpdateOrderCommand value)
+        {
+            var result = await _mediator.Send(value);
+
+            return Ok(result);
+        }
         // DELETE api/<OrderController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
@@ -89,4 +117,5 @@ namespace E_Commerce.Api.Controllers
     public record OrderQuery(int pageNumber, string? searchTerm, string? sortColumn,bool des = false);
     public record OrderStateDto(string Name,int Value);
     public record ChangeStateDto(OrderId id,OrderState state);
+
 }

@@ -1,6 +1,6 @@
 ﻿using E_Commerce.SharedKernal.Domain;
 
-namespace E_Commerce.Domain.Model.ReviewAggre
+namespace E_Commerce.Domain.Model.ProductAggre
 {
     public class ReviewId : ValueObjectId, IValueObjectId<ReviewId>
     {
@@ -15,7 +15,7 @@ namespace E_Commerce.Domain.Model.ReviewAggre
 
         public static ReviewId CreateUnique()
         {
-            return new(Guid.NewGuid());
+            return Create(Guid.NewGuid());
         }
     }
 }

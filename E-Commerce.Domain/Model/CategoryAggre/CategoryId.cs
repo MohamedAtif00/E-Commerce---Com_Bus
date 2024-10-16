@@ -13,7 +13,7 @@ namespace E_Commerce.Domain.Model.CategoryAggre
     public class CategoryId : ValueObjectId, IValueObjectId<CategoryId>
     {
    
-        public CategoryId(Guid id) : base(id)
+        private CategoryId(Guid id) : base(id)
         {
         }
 

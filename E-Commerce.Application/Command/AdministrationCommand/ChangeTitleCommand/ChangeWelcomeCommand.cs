@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Command.AdministrationCommand.ChangeTitleCommand
 {
-    public record ChangeWelcomeCommand(string title_Eng,string title_Arb,string message_Eng,string message_Arb):ICommand;
+    public record ChangeWelcomeCommand(string title_Eng,string title_Arb,string message_Eng,string message_Arb,string marquee_Eng,string marquee_Arb):ICommand;
     
     
 }

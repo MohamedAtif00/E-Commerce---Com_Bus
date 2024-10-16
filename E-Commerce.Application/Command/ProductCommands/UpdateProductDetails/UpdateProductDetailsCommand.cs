@@ -11,7 +11,9 @@ namespace E_Commerce.Application.Command.ProductCommands.UpdateProductDetails
 {
     public record UpdateProductDetailsCommand(ProductId ProductId,
                                               string name,
+                                              string nameArab,
                                               string description,
+                                              string descriptionArab,
                                               int stsockQuantity,
                                               decimal price,
                                               int discount,

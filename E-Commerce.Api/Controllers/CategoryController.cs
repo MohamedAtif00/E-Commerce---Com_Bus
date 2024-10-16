@@ -1,7 +1,10 @@
 ﻿using Ardalis.Result.AspNetCore;
 using E_Commerce.Application.Command.CategoryCommand.AddCategory;
+using E_Commerce.Application.Command.CategoryCommand.AddChildCategory;
+using E_Commerce.Application.Command.CategoryCommand.MoveCategory;
 using E_Commerce.Application.Query.AdministrationQuery.CategryEarningChart;
 using E_Commerce.Application.Query.CategoryQuery.GetAllCategoriesQuery;
+using E_Commerce.Application.Query.CategoryQuery.GetAllChildsCategoryQuery;
 using E_Commerce.Application.Query.CategoryQuery.GetSingleCategoryQuery;
 using E_Commerce.Domain.Model.CategoryAggre;
 using MediatR;
@@ -26,7 +29,14 @@ namespace E_Commerce.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result =await _mediator.Send(new GetAllCategoriesQuery());
+            var result = await _mediator.Send(new GetAllCategoriesQuery());
+
+            return Ok(result);
+        }
+        [HttpGet("GetAllChildsCategories")]
+        public async Task<IActionResult> GetAllChildsCategories()
+        {
+            var result = await _mediator.Send(new GetAllChildsCategoryQuery());
 
             return Ok(result);
         }
@@ -53,6 +63,22 @@ namespace E_Commerce.Api.Controllers
         public async Task<IActionResult> Post([FromBody] AddCategoryCommand value)
         {
             var result = await _mediator.Send(value);
+            return Ok(result);
+        }
+
+        [HttpPost("AddChildCategory")]
+        public async Task<IActionResult> AddChildCategory([FromBody] AddChildCategoryCommand value)
+        {
+            var result = await _mediator.Send(value);
+
+            return Ok(result);
+        }
+
+        [HttpPost("MoveCategory")]
+        public async Task<IActionResult> MoveCategory([FromBody] MoveCategoryCommand value)
+        {
+            var result = await _mediator.Send(value);
+
             return Ok(result);
         }
 

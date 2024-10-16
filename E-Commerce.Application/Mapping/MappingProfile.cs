@@ -38,7 +38,8 @@ namespace E_Commerce.Application.Mapping
                 src.Address,
                 src.PhoneNumber,
                 src._customerId,
-                src.TotalPrice
+                src.TotalPrice,
+                src.TrackingNumber
             )).ReverseMap();
 
 

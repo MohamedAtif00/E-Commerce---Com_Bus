@@ -66,10 +66,18 @@ namespace E_Commerce.Application.Helper
 
         public static async Task<PageList<T>> CreateAsync(IQueryable<T> query, int page, int pageSize)
         {
-            int totalCount = await query.CountAsync();
-            var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            try
+            {
+                int totalCount = await query.CountAsync();
+                var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            return new(items, page, pageSize, totalCount);
+                return new(items, page, pageSize, totalCount);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
     }

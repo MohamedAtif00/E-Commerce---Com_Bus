@@ -7,6 +7,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,11 @@ namespace E_Commerce.Infrastructure.Domain.OrderConfig
 
             builder.Property(x => x._customerId).HasConversion(x =>x.value,x =>CustomerId.Create(x));
 
-            builder.Property(x => x.State).HasColumnType("nvarchar(10)"); ;
+            builder.Property(x => x.State).HasColumnType("nvarchar(10)");
+
+            builder.Property(x => x.CouponId).HasConversion(x => x.value, value => CouponId.Create(value));
+
+            builder.HasOne(x => x.Coupon);
                 
             builder.OwnsMany(x => x._orderItems,conf => 
             {
@@ -35,6 +40,8 @@ namespace E_Commerce.Infrastructure.Domain.OrderConfig
 
                 conf.Property(x =>x._productId).HasConversion(x =>x.value,x =>ProductId.Create(x));
             });
+
+
 
             builder.ComplexProperty(x =>x.Address,a => 
             {

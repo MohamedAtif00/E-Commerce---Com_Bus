@@ -1,5 +1,4 @@
-﻿using Ardalis.Result;
-using E_Commerce.Application.Command.AdministrationCommand.AddSpecialProductsCommand;
+﻿using E_Commerce.Application.Command.AdministrationCommand.AddSpecialProductsCommand;
 using E_Commerce.Application.Command.AdministrationCommand.ChangeTitleCommand;
 using E_Commerce.Application.Command.AdministrationCommand.ChangeWebsiteColorCommand;
 using E_Commerce.Application.Command.AdministrationCommand.SetDescriptionCommand;
@@ -14,7 +13,7 @@ using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Domain.Model.ProductAggre;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -144,7 +143,7 @@ namespace E_Commerce.Api.Controllers
         [HttpPost("ChangeWelcomeMessage")]
         public async Task<IActionResult> ChangeWelcomeMessage(ChangeWelcomeMessageDto value)
         {
-            var result = await _mediator.Send(new ChangeWelcomeCommand(value.title_Eng,value.title_Arb,value.desc_Eng,value.desc_Arb));
+            var result = await _mediator.Send(new ChangeWelcomeCommand(value.title_Eng,value.title_Arb,value.desc_Eng,value.desc_Arb,value.marquee_Eng,value.maruee_Arb));
 
             return Ok(result);  
         }
@@ -152,7 +151,7 @@ namespace E_Commerce.Api.Controllers
         [HttpPost("ChangeDescription")]
         public async Task<IActionResult> ChangeDescription(ChangeWelcomeMessageDto value)
         {
-            var result = await _mediator.Send(new SetDescriptionCommand(value.title_Eng,value.title_Arb,value.desc_Eng,value.desc_Arb));
+            var result = await _mediator.Send(new SetDescriptionCommand(value.title_Eng,value.title_Arb,value.desc_Eng,value.desc_Arb,value.marquee_Eng,value.maruee_Arb));
 
             return Ok(result);  
         }
@@ -177,5 +176,5 @@ namespace E_Commerce.Api.Controllers
     }
 
     public record ChangeColorDto(string color);
-    public record ChangeWelcomeMessageDto(string title_Eng,string title_Arb,string desc_Eng,string desc_Arb);
+    public record ChangeWelcomeMessageDto(string title_Eng,string title_Arb,string desc_Eng,string desc_Arb,string? marquee_Eng,string? maruee_Arb);
 }

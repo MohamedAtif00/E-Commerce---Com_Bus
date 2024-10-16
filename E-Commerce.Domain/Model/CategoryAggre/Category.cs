@@ -1,5 +1,4 @@
-﻿using E_Commerce.Domain.Model.SuperCategoryAggre;
-using E_Commerce.SharedKernal.Domain;
+﻿using E_Commerce.SharedKernal.Domain;
 using Newtonsoft.Json;
 
 
@@ -8,33 +7,41 @@ namespace E_Commerce.Domain.Model.CategoryAggre
     public class Category : AggregateRoot<CategoryId>
     {
 
-        private readonly List<Category>? _categories = new();
+        private  List<ChildCategory>? _childCategories = new();
         public Category():base(CategoryId.CreateUnique())
         {
             
         }
-        public Category(CategoryId id, string name, SuperCategoryId? superCategoryId , CategoryId? parentCategoryId ) : base(id)
+        public Category(CategoryId id, string name  ) : base(id)
         {
             _name = name;
-            SuperCategoryId = superCategoryId;
-            _parentCategoryId = parentCategoryId;
         }
 
         public string _name { get;private set; }
-        public SuperCategoryId? SuperCategoryId { get; private set; }
-        public CategoryId? _parentCategoryId {  get; private set; }
         public bool _visible { get; private set; } = true;
 
-        public virtual IReadOnlyCollection<Category>? ChildCategories => _categories;
+        public virtual IReadOnlyCollection<ChildCategory>? ChildCategories => _childCategories.AsReadOnly();
 
-        public static Category Create(string name, SuperCategoryId? superCategoryId = null, CategoryId? parentCategory = null)
+        public static Category Create(string name )
         {
-            return new(CategoryId.CreateUnique(),name,superCategoryId,parentCategory);
+            return new(CategoryId.CreateUnique(),name);
         }
 
         public void MakeItVisible()
         {
             if (!_visible) _visible = true;
         }
+
+        public async Task RemoveChildCategory(ChildCategory childCategory)
+        {
+            _childCategories.Remove(childCategory);
+        }
+
+        public async Task AddChildCategory(ChildCategory childCategory)
+        {
+            _childCategories.Add(childCategory);
+        }
+
+
     }
 }

@@ -9,8 +9,11 @@
 
   <ItemGroup>
     <Compile Remove="Abstraction\**" />
+    <Compile Remove="Model\SuperCategoryAggre\**" />
     <EmbeddedResource Remove="Abstraction\**" />
+    <EmbeddedResource Remove="Model\SuperCategoryAggre\**" />
     <None Remove="Abstraction\**" />
+    <None Remove="Model\SuperCategoryAggre\**" />
   </ItemGroup>
 
   <ItemGroup>

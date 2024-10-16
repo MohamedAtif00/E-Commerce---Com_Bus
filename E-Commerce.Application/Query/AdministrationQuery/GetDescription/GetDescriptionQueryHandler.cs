@@ -28,7 +28,7 @@ namespace E_Commerce.Application.Query.AdministrationQuery.GetDescription
 
                 var description = admin._description;
 
-                GetDescriptionDto dto = new GetDescriptionDto(description.Title_Eng, description.Title_Arb, description.Desc_Eng, description.Desc_Arb);
+                GetDescriptionDto dto = new GetDescriptionDto(description.Title_Eng, description.Title_Arb, description.Desc_Eng, description.Desc_Arb,description.Marquee_Eng,description.Marquee_Arb);
 
                 return Result.Success(dto);
 

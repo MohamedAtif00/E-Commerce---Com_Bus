@@ -35,7 +35,9 @@ namespace E_Commerce.Application.Command.ProductCommands.UpdateProductDetails
                 
                 var price = Price.Create(request.price, request.discount, request.hasPercentage);
                 product.UpdateDetails(request.name,
+                                      request.nameArab,
                                       request.description,
+                                      request.descriptionArab,
                                       request.stsockQuantity, // Corrected from 'sstockQuantity' to 'stockQuantity'
                                       price,
                                       request.CategoryId);

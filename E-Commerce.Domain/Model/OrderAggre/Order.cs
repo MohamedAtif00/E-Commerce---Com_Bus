@@ -21,29 +21,35 @@ namespace E_Commerce.Domain.Model.OrderAggre
         {
             
         }
-        public Order(OrderId id, Address address, string customerName, string phoneNumber, CustomerId? customerId, decimal totalPrice,OrderState orderState = OrderState.Pending) : base(id)
+        public Order(OrderId id, Address address, string customerName, string phoneNumber, CustomerId? customerId, decimal totalPrice,CouponId couponId = null) : base(id)
         {
             _customerId = customerId;
             Address = address;
             CustomerName = customerName;
             PhoneNumber = phoneNumber;
             TotalPrice = totalPrice;
-            State = orderState;
+            CouponId = couponId;
+            CreatedDate = DateTime.UtcNow;
         }
         [EnumDataType(typeof(OrderState))]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public OrderState State { get; set; } = OrderState.Pending;
-        public DateTime CreatedDate { get; init; } = DateTime.UtcNow;
+        public DateTime CreatedDate { get; init; }
         public Address Address { get; set; }
         public string CustomerName { get; set; }
         public string PhoneNumber { get; set; }
         public decimal TotalPrice { get; set; }
+        public string? TrackingNumber { get; set; }
+        public int Check { get; set; } = 0;
         public CustomerId? _customerId { get; init; }
+        public CouponId? CouponId { get; set; }
+        public Coupon Coupon { get; set; }
+        
         public IReadOnlyCollection<OrderItem> _orderItems => orderItems;
 
-        public static Order Create(CustomerId? customerId, Address address, string customerName, string phoneNumber,decimal totalPrice)
+        public static Order Create(CustomerId? customerId, Address address, string customerName, string phoneNumber,decimal totalPrice,CouponId couponId = null)
         {
-            return new(OrderId.CreateUnique(),address,customerName,phoneNumber, customerId,totalPrice);
+            return new(OrderId.CreateUnique(),address,customerName,phoneNumber, customerId,totalPrice,couponId);
         }
 
         public void AddOrderItem(OrderItem orderItem)
@@ -60,21 +66,100 @@ namespace E_Commerce.Domain.Model.OrderAggre
             }
             this.orderItems.AddRange(orderItems);
         }
+
+        public void AddTrackingNumber(string trackingNumber)
+        {
+            TrackingNumber = trackingNumber;    
+        }
+
+        public void MakeCheck()
+        {
+            Check++;
+        }
+        
     }
 
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum OrderState { 
-        Pending,
-        Accepted,
-        Expired,
-        Failed,
-        Cancelled,
-        Completed,
-        Denied,
-        Processing,
-        Refunded,
-        Delivered,
-        Delivering
-    }
+   [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum OrderState
+        {
+            Pending,
+
+            [Display(Name = "Pickup Requested")]
+            PickupRequested,
+
+            [Display(Name = "Waiting for route")]
+            WaitingForRoute,
+
+            [Display(Name = "Route Assigned")]
+            RouteAssigned,
+
+            [Display(Name = "Picked up from business")]
+            PickedUpFromBusiness,
+
+            [Display(Name = "Picking up from consignee")]
+            PickingUpFromConsignee,
+
+            [Display(Name = "Picked up from consignee")]
+            PickedUpFromConsignee,
+
+            [Display(Name = "Received at warehouse")]
+            ReceivedAtWarehouse,
+
+            Fulfilled,
+
+            [Display(Name = "In transit between Hubs")]
+            InTransitBetweenHubs,
+
+            [Display(Name = "Picking up")]
+            PickingUp,
+
+            [Display(Name = "Picked up")]
+            PickedUp,
+
+            [Display(Name = "Pending Customer Signature")]
+            PendingCustomerSignature,
+
+            [Display(Name = "Debriefed Successfully")]
+            DebriefedSuccessfully,
+
+            Delivered,
+
+            [Display(Name = "Returned to business")]
+            ReturnedToBusiness,
+
+            Exception,
+
+            Terminated,
+
+            [Display(Name = "Canceled (uncovered area)")]
+            CanceledUncoveredArea,
+
+            [Display(Name = "Collection Failed")]
+            CollectionFailed,
+
+            [Display(Name = "Returned to stock")]
+            ReturnedToStock,
+
+            Lost,
+
+            Damaged,
+
+            Investigation,
+
+            [Display(Name = "Awaiting your action")]
+            AwaitingYourAction,
+
+            Archived,
+
+            [Display(Name = "On hold")]
+            OnHold,
+
+            Failed,
+
+            Cancelled,
+
+            Delivering
+        }
+
 
 }

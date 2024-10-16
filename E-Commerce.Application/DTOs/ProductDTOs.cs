@@ -12,7 +12,9 @@ namespace E_Commerce.Application.DTOs
     public class ProductDTOs
     {
         public record CreateProductDTO(string name,
+                                    string nameArab,
                                     string description,
+                                    string descriptionArab,
                                     int discount,
                                     CategoryId categoryId,
                                     decimal price,

@@ -24,7 +24,7 @@ namespace E_Commerce.Application.Command.AdministrationCommand.SetDescriptionCom
             try
             {
                 var admin = await _unitOfWork.AdministrationRepository.GetAdministration();
-                var desc = new Description(request.title_eng, request.title_arb, request.desc_eng, request.title_arb);
+                var desc = new Description(request.title_eng, request.title_arb, request.desc_eng, request.title_arb,request.marquee_eng,request.marquee_arb);
 
                 int saving;
                 if (admin == null)

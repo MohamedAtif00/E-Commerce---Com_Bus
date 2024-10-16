@@ -2,6 +2,7 @@
 using E_Commerce.Application.Command.ShipmentInformationCommand.AddPickupAddress;
 using E_Commerce.Application.Command.ShipmentInformationCommand.AddShipmentInformation;
 using E_Commerce.Application.Command.ShipmentInformationCommand.AddShipmentToken;
+using E_Commerce.Application.Query.ShipmentInformation.GetActivePickupAddress;
 using E_Commerce.Application.Query.ShipmentInformation.GetAllPickupAddress;
 using E_Commerce.Domain.Model.ShipmentInformationAggre;
 using E_Commerce.Infrastructure.Migrations;
@@ -47,6 +48,15 @@ namespace E_Commerce.Api.Controllers
         public async Task<IActionResult> GetAllPickupAddress()
         {
             var result = await _mediator.Send(new GetAllPickupAddressQuery());
+
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetActivePickupAddress")]
+        public async Task<IActionResult> GetActivePickupAddress()
+        {
+            var result = await _mediator.Send(new GetActivePickupAddressQuery());
 
             return Ok(result);
         }

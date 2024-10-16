@@ -7,7 +7,6 @@ using E_Commerce.Domain.Model.OrderAggre;
 using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.Domain.Model.ShipmentInformationAggre;
 using E_Commerce.Domain.Model.SpecificationAggre;
-using E_Commerce.Domain.Model.SuperCategoryAggre;
 using E_Commerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,27 +17,29 @@ namespace E_Commerce.Infrastructure.Domain
     {
         public ApplicationContext _context { get; }
 
-        public UnitOfWork(ApplicationContext context, IProductRepository productRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository, ISuperCategoryRepository superCategoryRepository, ISpecificationRepository specificationRepository, IImageRepository imageRepository, IAdministrationRepository administrationRepository, ISpecialProductsRepository specialProductsRepository, IContactRepository contactRepository, IShipmentInformationRepository shipmentInformationRepository)
+        public UnitOfWork(ApplicationContext context, IProductRepository productRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository, ISpecificationRepository specificationRepository, IImageRepository imageRepository, IAdministrationRepository administrationRepository, ISpecialProductsRepository specialProductsRepository, IContactRepository contactRepository, IShipmentInformationRepository shipmentInformationRepository, IChildCategoryRepository childCategoryRepository, ICouponRepository couponRepository)
         {
             _context = context;
             ProductRepository = productRepository;
             OrderRepository = orderRepository;
             CategoryRepository = categoryRepository;
-            SuperCategoryRepository = superCategoryRepository;
             SpecificationRepository = specificationRepository;
             ImageRepository = imageRepository;
             AdministrationRepository = administrationRepository;
             SpecialProductsRepository = specialProductsRepository;
             this.contactRepository = contactRepository;
             ShipmentInformationRepository = shipmentInformationRepository;
+            ChildCategoryRepository = childCategoryRepository;
+            CouponRepository = couponRepository;
         }
 
         public IProductRepository ProductRepository { get; set; }
         public IImageRepository ImageRepository { get; set; }   
 
         public IOrderRepository OrderRepository { get; set; }
+        public ICouponRepository CouponRepository { get; set; }
         public ICategoryRepository CategoryRepository { get; set; }
-        public ISuperCategoryRepository SuperCategoryRepository { get; set; }
+        public IChildCategoryRepository ChildCategoryRepository { get; set; }
         public ISpecificationRepository SpecificationRepository { get; set; }
         public IAdministrationRepository AdministrationRepository { get; set; }
         public ISpecialProductsRepository SpecialProductsRepository { get; set; }
