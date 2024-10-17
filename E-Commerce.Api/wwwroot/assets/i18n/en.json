@@ -42,7 +42,8 @@
             "CATEGORIES":"Categories",
             "ADDCATEGORIES":"Add Category",
             "SALES":"Sales",
-            "ADMINISTRATION":"Administration"
+            "ADMINISTRATION":"Administration",
+            "COUPON":"Coupon"
         },
         "RECENTORDERS":{
             "RECENTORDERS":"Recent Orders",
@@ -108,7 +109,8 @@
         "SAVELOGO":"Save Logo",
         "UPLOADHERO":"Upload Hero",
         "WELCOMEMESSAGECUSTOMIZATION":"Welcome Message Customization",
-        "DESCRIPTIONMESSAGECUSTOMIZATION":"Description Message Customization"
+        "DESCRIPTIONMESSAGECUSTOMIZATION":"Description Message Customization",
+        "MARQUEE":"Marquee Message"
     },
     "CATEGORY":{
         "CATEGORYFORM":"Category Form",
@@ -134,6 +136,11 @@
         "STATE":"State",
         "CITY":"City",
         "STREET":"Street",
+        "ADDRESSLINE1":"First Line",
+        "ADDRESSLINE2":"Second Line",
+        "BUILDINGNUMBER":"Building Number",
+        "FLOOR":"Floor",
+        "APARTMENT":"Apartment",
         "ORDER":"Order",
         "PRODUCT":"Product",
         "QUANTITY":"Quantity",

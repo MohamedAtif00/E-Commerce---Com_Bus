@@ -44,7 +44,8 @@
             "CATEGORIES":"اصناف",
             "ADDCATEGORIES":"اضافة صنف",
             "SALES":"مبيعات",
-            "ADMINISTRATION":"الادارة"
+            "ADMINISTRATION":"الادارة",
+            "COUPON":"كوبونات"
         },
         "RECENTORDERS":{
             "RECENTORDERS":"الطلبات الحالية",
@@ -147,6 +148,12 @@
         "DELIVERYDATE":"تاريخ التوصيل",
         "GRANDTOTAL":"الاجمالى النهائي"
 
+    },
+    "CONTACT":{
+        "CONTACTVIEW":"صندوق الوارد",
+        "DASHBOARD":"لوحة التحكم",
+        "CONTACT":"اتصل بنا"
+        
     }
 }
 
