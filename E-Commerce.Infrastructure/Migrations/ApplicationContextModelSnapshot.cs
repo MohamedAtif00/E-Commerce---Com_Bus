@@ -340,6 +340,9 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsSpecial")
+                        .HasColumnType("bit");
+
                     b.Property<long>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -348,7 +351,7 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.Property<DateTime>("_CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 15, 11, 27, 52, 808, DateTimeKind.Local).AddTicks(5357));
+                        .HasDefaultValue(new DateTime(2024, 10, 18, 22, 19, 14, 448, DateTimeKind.Local).AddTicks(9922));
 
                     b.Property<DateTime?>("_UpdatedAt")
                         .HasColumnType("datetime2");
@@ -361,6 +364,9 @@ namespace E_Commerce.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("_groupId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("_name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -372,6 +378,9 @@ namespace E_Commerce.Infrastructure.Migrations
 
                     b.Property<int>("_stockQuantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("_totalReviews")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("categoryId")
                         .HasColumnType("uniqueidentifier");
@@ -678,6 +687,33 @@ namespace E_Commerce.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Model.AdministrationAggre.Administration", b =>
+                {
+                    b.OwnsMany("E_Commerce.Domain.Model.AdministrationAggre.Group", "Groups", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("AdministrationId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("GroupName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("AdministrationId");
+
+                            b1.ToTable("Group");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AdministrationId");
+                        });
+
+                    b.Navigation("Groups");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Model.CategoryAggre.ChildCategory", b =>

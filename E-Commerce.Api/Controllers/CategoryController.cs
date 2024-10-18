@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result.AspNetCore;
 using E_Commerce.Application.Command.CategoryCommand.AddCategory;
 using E_Commerce.Application.Command.CategoryCommand.AddChildCategory;
+using E_Commerce.Application.Command.CategoryCommand.DeleteCategory;
 using E_Commerce.Application.Command.CategoryCommand.MoveCategory;
 using E_Commerce.Application.Query.AdministrationQuery.CategryEarningChart;
 using E_Commerce.Application.Query.CategoryQuery.GetAllCategoriesQuery;
@@ -90,8 +91,11 @@ namespace E_Commerce.Api.Controllers
 
         // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(CategoryId id)
         {
+            var result = await _mediator.Send(new DeleteCategoryCommand(id));
+
+            return Ok(result);
         }
     }
 }

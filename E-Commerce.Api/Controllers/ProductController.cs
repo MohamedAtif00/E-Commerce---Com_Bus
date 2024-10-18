@@ -16,6 +16,10 @@ using E_Commerce.Application.Command.ProductCommands.UpdateProductDetails;
 using E_Commerce.Application.Command.ProductCommands.DeleteMasterImageCommand;
 using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Application.Command.ProductCommands.AddReviewCommand;
+using E_Commerce.Application.Command.ProductCommands.MakeProductSpecialCommand;
+using E_Commerce.Domain.Model.AdministrationAggre;
+using E_Commerce.Application.Query.ProductQuery.GetSpecialProducts;
+using E_Commerce.Application.Query.ProductQuery.GetAllReviews;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -52,7 +56,8 @@ namespace E_Commerce.Api.Controllers
                                                                       query.searchTerm,
                                                                       query.startPrice,
                                                                       query.endPrice,
-                                                                      query.categoryIds
+                                                                      query.categoryIds,
+                                                                      query.asend
                                                                       ));
 
             return Ok(result);
@@ -63,6 +68,28 @@ namespace E_Commerce.Api.Controllers
         public async Task<IActionResult> Get(ProductId id)
         {
             var result = await _mediator.Send(new GetSingleProductQuery(id));
+            return Ok(result);
+        }
+
+        [HttpGet("GetSpecialProducts/{id}")]
+        public async Task<IActionResult> GetSpecialProducts(string id)
+        {
+            var result = await _mediator.Send(new GetSpecialProductsQuery(GroupId.Create(Guid.Parse(id))));
+
+           return Ok(result);
+        }
+        [HttpGet("GetAllReviews")]
+        public async Task<IActionResult> GetAllReviews()
+        {
+            var result = await _mediator.Send(new GetAllReviewsQuery());
+
+            return Ok(result);
+        }
+
+        [HttpGet("MakeSpecial/{productId:guid}/{groupId}")]
+        public async Task<IActionResult> MakeSpecial([FromRoute] ProductId productId,[FromRoute] string groupId)
+        {
+            var result = await _mediator.Send(new MakeProductSpecialCommand(productId,GroupId.Create(Guid.Parse(groupId))));
             return Ok(result);
         }
 
@@ -83,6 +110,7 @@ namespace E_Commerce.Api.Controllers
 
             return Ok(result);
         }
+
 
         [HttpPost("AddMasterImage")]
         public async Task<IActionResult> AddMasterImage([FromForm] ProductDTOs.CreateProductImageDTO value)
@@ -218,7 +246,8 @@ namespace E_Commerce.Api.Controllers
                                string? sortColumn,
                                decimal? startPrice,
                                decimal? endPrice,
-                               List<CategoryId>? categoryIds
+                               List<CategoryId>? categoryIds,
+                               bool asend = false
                                );
 
     public record AddProductImage( IFormFile file,string name);

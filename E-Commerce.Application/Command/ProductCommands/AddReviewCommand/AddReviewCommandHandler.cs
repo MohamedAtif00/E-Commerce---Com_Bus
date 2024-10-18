@@ -27,7 +27,13 @@ namespace E_Commerce.Application.Command.ProductCommands.AddReviewCommand
 
                 var product = await _unitOfWork.ProductRepository.GetById(request.ProductId,true);
 
+
                 product.AddReview(review);
+
+                var allReviews = product.reviews;
+                decimal total = allReviews.Select(x => x.rating).Sum() / allReviews.Count();
+
+                product.AddTotalReviews(total);
 
                 await _unitOfWork.ProductRepository.Update(product);
 

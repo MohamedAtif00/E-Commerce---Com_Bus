@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.CategoryAggre;
+﻿using E_Commerce.Domain.Model.AdministrationAggre;
+using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Domain.Model.ProductAggre.Rules;
 using E_Commerce.SharedKernal.Domain;
 using System.Diagnostics;
@@ -41,9 +42,13 @@ namespace E_Commerce.Domain.Model.ProductAggre
         public string _description_arab { get; private set; }
         public Price _price { get; private set; }
         public int _stockQuantity { get; private set; }
+        public decimal _totalReviews { get; private set; } = 0;
         public DateTime _CreatedAt { get; private init; } = DateTime.UtcNow;
         public DateTime? _UpdatedAt { get; private set; }
         public CategoryId categoryId { get; private set; }
+        public bool IsSpecial { get; private set; } = false;
+        public GroupId? _groupId { get; private set; }
+         
 
         public IReadOnlyCollection<Image> images => _images.AsReadOnly();
         public IReadOnlyCollection<Review> reviews => _reviews.AsReadOnly();
@@ -101,6 +106,18 @@ namespace E_Commerce.Domain.Model.ProductAggre
         {
             _reviews.Add(review);
         }
+
+        public void MakeSpecial(GroupId groupId)
+        {
+            IsSpecial = true;
+            _groupId = groupId;
+        }
+
+        public void AddTotalReviews(decimal totalReviews)
+        {
+            _totalReviews = totalReviews;
+        }
+
 
     }
 }

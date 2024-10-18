@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Model.CategoryAggre;
+﻿using E_Commerce.Domain.Model.AdministrationAggre;
+using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Domain.Model.ProductAggre;
 using E_Commerce.Domain.Model.ProductAggre.Converters;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +20,8 @@ namespace E_Commerce.Infrastructure.Domain.productConfig
             
             builder.Property(x => x.Id).HasConversion(x =>x.value,x =>ProductId.Create(x));
             builder.Property(x => x.categoryId).HasConversion(x =>x.value,value => CategoryId.Create(value));
-          
 
+            builder.Property(x =>x._groupId).HasConversion(x => x.value,value => GroupId.Create(value));
 
             builder.Property(x => x._name)
                 .IsRequired()

@@ -16,6 +16,11 @@ namespace E_Commerce.Infrastructure.Domain.AdministrationConfig
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasConversion(x =>x.value,x => AdministrationId.Create(x));
 
+            builder.OwnsMany(x=> x.Groups, conf => {
+                conf.HasKey(x => x.Id);
+                conf.Property(x => x.Id).HasConversion(x => x.value,value => GroupId.Create(value));
+            });
+
             builder.ComplexProperty(x => x._heroImage,c => 
             {
 

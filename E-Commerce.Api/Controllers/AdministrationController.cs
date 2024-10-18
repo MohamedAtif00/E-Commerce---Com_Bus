@@ -1,6 +1,8 @@
-﻿using E_Commerce.Application.Command.AdministrationCommand.AddSpecialProductsCommand;
+﻿using E_Commerce.Application.Command.AdministrationCommand.AddCarsoulC_ommand;
+using E_Commerce.Application.Command.AdministrationCommand.AddSpecialProductsCommand;
 using E_Commerce.Application.Command.AdministrationCommand.ChangeTitleCommand;
 using E_Commerce.Application.Command.AdministrationCommand.ChangeWebsiteColorCommand;
+using E_Commerce.Application.Command.AdministrationCommand.DeleteCarouselCommand;
 using E_Commerce.Application.Command.AdministrationCommand.SetDescriptionCommand;
 using E_Commerce.Application.Command.ProductCommands.DeleteProductCommand;
 using E_Commerce.Application.Helper;
@@ -9,6 +11,7 @@ using E_Commerce.Application.Query.AdministrationQuery.GetAdministration;
 using E_Commerce.Application.Query.AdministrationQuery.GetDescription;
 using E_Commerce.Application.Query.AdministrationQuery.GetOrdersForCategory;
 using E_Commerce.Application.Query.AdministrationQuery.GetSpecialProducts;
+using E_Commerce.Domain.Model.AdministrationAggre;
 using E_Commerce.Domain.Model.CategoryAggre;
 using E_Commerce.Domain.Model.ProductAggre;
 using MediatR;
@@ -164,6 +167,14 @@ namespace E_Commerce.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost("AddCarsoul")]
+        public async Task<IActionResult> AddCarsoul(AddCarsoulCommand request)
+        {
+            var result = await _mediator.Send(request);
+
+            return Ok(result);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(ProductId id)
         {
@@ -172,6 +183,13 @@ namespace E_Commerce.Api.Controllers
             return Ok(result);
         }
 
+        [HttpDelete("DeleteCarousel/{id}")]
+        public async Task<IActionResult> DeleteCarousel( string id)
+        {
+            var result = await _mediator.Send(new DeleteCarouselCommand(GroupId.Create(Guid.Parse(id))));
+
+            return Ok(result);
+        }
 
     }
 

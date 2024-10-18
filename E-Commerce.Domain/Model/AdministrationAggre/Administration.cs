@@ -11,7 +11,7 @@ namespace E_Commerce.Domain.Model.AdministrationAggre
     public class Administration : AggregateRoot<AdministrationId>
     {
 
-
+        private readonly List<Group> _groups = new();
         public Administration(AdministrationId id) : base(id)
         {
         }
@@ -20,6 +20,7 @@ namespace E_Commerce.Domain.Model.AdministrationAggre
         public Description _description { get; set; }
         public string _websiteColor { get; set; } = "#FBD5D5";
         
+        public IReadOnlyCollection<Group> Groups => _groups;
 
         public static Administration Create()
         {
@@ -47,6 +48,16 @@ namespace E_Commerce.Domain.Model.AdministrationAggre
         public void UpdateDescription(Description description)
         {
             _description = description;
+        }
+
+        public void AddGroup(Group group)
+        {
+            _groups.Add(group);
+        }
+
+        public void DeleteGroup(Group group)
+        {
+            _groups.Remove(group);
         }
        
     }

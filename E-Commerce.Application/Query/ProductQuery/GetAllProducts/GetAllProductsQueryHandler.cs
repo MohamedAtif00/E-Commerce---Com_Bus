@@ -59,8 +59,14 @@ namespace E_Commerce.Application.Query.ProductQuery.GetAllProducts
                     _ => Product => Product.Id
                 };
 
-                if(keySelector != null)
-                productsQuery = productsQuery.OrderBy(keySelector);
+                if (keySelector != null)
+                {
+                    if(request.asend)
+                        productsQuery = productsQuery.OrderByDescending(keySelector);
+                    else
+                        productsQuery = productsQuery.OrderBy(keySelector);
+                    
+                }
 
 
 
