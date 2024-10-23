@@ -15,7 +15,7 @@ namespace E_Commerce.Application.DTOs
                                     string nameArab,
                                     string description,
                                     string descriptionArab,
-                                    int discount,
+                                    int? discount,
                                     CategoryId categoryId,
                                     decimal price,
                                     bool? hasPercentage,
