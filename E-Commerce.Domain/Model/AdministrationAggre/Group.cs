@@ -22,5 +22,9 @@ namespace E_Commerce.Domain.Model.AdministrationAggre
             return new(GroupId.CreateUnique(),groupName);
         }
 
+        public void Update(string name)
+        {
+            GroupName = name;
+        }
     }
 }

@@ -2,10 +2,12 @@
 using E_Commerce.Application.Command.CategoryCommand.AddCategory;
 using E_Commerce.Application.Command.CategoryCommand.AddChildCategory;
 using E_Commerce.Application.Command.CategoryCommand.DeleteCategory;
+using E_Commerce.Application.Command.CategoryCommand.DeleteChildCategory;
 using E_Commerce.Application.Command.CategoryCommand.MoveCategory;
 using E_Commerce.Application.Query.AdministrationQuery.CategryEarningChart;
 using E_Commerce.Application.Query.CategoryQuery.GetAllCategoriesQuery;
 using E_Commerce.Application.Query.CategoryQuery.GetAllChildsCategoryQuery;
+using E_Commerce.Application.Query.CategoryQuery.GetSignleChildCategory;
 using E_Commerce.Application.Query.CategoryQuery.GetSingleCategoryQuery;
 using E_Commerce.Domain.Model.CategoryAggre;
 using MediatR;
@@ -75,6 +77,14 @@ namespace E_Commerce.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetSingleChildCategory/{id}")]
+        public async Task<IActionResult> GetSingleChildCategory(Guid id)
+        {
+            var result = await _mediator.Send(new GetSingleChildCategoryQuery(ChildCategoryId.Create(id)));
+
+            return Ok(result);
+        }
+
         [HttpPost("MoveCategory")]
         public async Task<IActionResult> MoveCategory([FromBody] MoveCategoryCommand value)
         {
@@ -96,6 +106,14 @@ namespace E_Commerce.Api.Controllers
             var result = await _mediator.Send(new DeleteCategoryCommand(id));
 
             return Ok(result);
+        }
+
+        [HttpDelete("DeleteChildCategory/{id}")]
+        public async Task<IActionResult> DeleteChildCategory(ChildCategoryId id)
+        {
+            var result = await _mediator.Send(new DeleteChildCategoryCommand(id));
+
+            return Ok(result);  
         }
     }
 }

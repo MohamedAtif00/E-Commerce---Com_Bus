@@ -56,8 +56,10 @@ namespace E_Commerce.Api.Controllers
                                                                       query.searchTerm,
                                                                       query.startPrice,
                                                                       query.endPrice,
+                                                                      query.totalReviews,
                                                                       query.categoryIds,
                                                                       query.asend
+
                                                                       ));
 
             return Ok(result);
@@ -246,6 +248,7 @@ namespace E_Commerce.Api.Controllers
                                string? sortColumn,
                                decimal? startPrice,
                                decimal? endPrice,
+                               decimal? totalReviews,
                                List<CategoryId>? categoryIds,
                                bool asend = false
                                );

@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Application.Command.OrderCommand.AddCoupon;
 using E_Commerce.Application.Command.OrderCommand.AddOrder;
 using E_Commerce.Application.Command.OrderCommand.ChangeStatus;
+using E_Commerce.Application.Command.OrderCommand.DeleteCoupon;
 using E_Commerce.Application.Command.OrderCommand.UpdateOrder;
 using E_Commerce.Application.DTOs;
 using E_Commerce.Application.Query.OrderQuery.GetAllCouponQuery;
@@ -112,6 +113,14 @@ namespace E_Commerce.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpDelete("DeleteCoupon/{id}")]
+        public async Task<IActionResult> DeleteCoupon( Guid id)
+        {
+            var result = await _mediator.Send(new DeleteCouponCommand(CouponId.Create(id)));
+
+            return Ok(result);
         }
     }
     public record OrderQuery(int pageNumber, string? searchTerm, string? sortColumn,bool des = false);

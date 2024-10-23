@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Application.Command.ProductCommands.DeleteProductCommand
 {
-    public record DeleteProductCommand(ProductId id):ICommand;
+    public record DeleteProductCommand(ProductId id,string rootPath):ICommand;
     
     
 }

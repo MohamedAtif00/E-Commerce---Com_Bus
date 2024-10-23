@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using E_Commerce.Application.Helper;
 using E_Commerce.Domain.Common;
 using E_Commerce.SharedKernal.Application;
 using System;
@@ -25,6 +26,18 @@ namespace E_Commerce.Application.Command.ProductCommands.DeleteProductCommand
                 var product = await _unitOfWork.ProductRepository.GetById(request.id);
 
                 if (product == null) return Result.Error("this product is not exist");
+
+
+                // Delete Product images
+                foreach (var image in await _unitOfWork.ImageRepository.GetImage(product.Id))
+                {
+                     ImageHelper.DeleteImage(image.Path,request.rootPath);
+                }
+                // Delete master image
+                var masterImage = await _unitOfWork.ImageRepository.GetMasterImageByProductId(product.Id);
+                ImageHelper.DeleteImage(masterImage.Path,request.rootPath);
+;
+
                 await _unitOfWork.ProductRepository.Delete(product);
 
                 int saving = await _unitOfWork.save();

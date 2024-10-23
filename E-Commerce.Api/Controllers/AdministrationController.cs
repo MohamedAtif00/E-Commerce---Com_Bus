@@ -4,6 +4,7 @@ using E_Commerce.Application.Command.AdministrationCommand.ChangeTitleCommand;
 using E_Commerce.Application.Command.AdministrationCommand.ChangeWebsiteColorCommand;
 using E_Commerce.Application.Command.AdministrationCommand.DeleteCarouselCommand;
 using E_Commerce.Application.Command.AdministrationCommand.SetDescriptionCommand;
+using E_Commerce.Application.Command.AdministrationCommand.UpdateCarouselCommand;
 using E_Commerce.Application.Command.ProductCommands.DeleteProductCommand;
 using E_Commerce.Application.Helper;
 using E_Commerce.Application.Query.AdministrationQuery.DailyEarningChart;
@@ -46,7 +47,7 @@ namespace E_Commerce.Api.Controllers
         [HttpGet("GetWebsiteLogo")]
         public async Task<IActionResult> GetWebsitelogo()
         {
-            var result =  ImageHelper.GetImageFilePath("Upload/Logo/myLogo",_webHostEnvironment.WebRootPath);
+            string result = Path.Combine(_webHostEnvironment.WebRootPath, "Upload", "Logo", "myLogo.jpg");
 
             if (System.IO.File.Exists(result))
             {
@@ -118,6 +119,8 @@ namespace E_Commerce.Api.Controllers
             return Ok(result);
         }
 
+        // Post
+
         [HttpPost("ChangeWebsiteColor")]
         public async Task<IActionResult> ChanegWebsiteColor([FromBody] ChangeColorDto value)
         {
@@ -175,10 +178,20 @@ namespace E_Commerce.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost("UpdateCarousel/{id}")]
+        public async Task<IActionResult> UpdateCarousel(Guid id,UpdateCarouselDto request)
+        {
+            var result = await _mediator.Send(new UpdateCarouselCommand(GroupId.Create(id),request.name));
+
+            return Ok(result);
+        }
+
+        // Delete
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(ProductId id)
         {
-            var result = await _mediator.Send(new DeleteProductCommand(id));
+            var result = await _mediator.Send(new DeleteProductCommand(id,_webHostEnvironment.WebRootPath));
 
             return Ok(result);
         }
@@ -193,6 +206,7 @@ namespace E_Commerce.Api.Controllers
 
     }
 
+    public record UpdateCarouselDto(string name);
     public record ChangeColorDto(string color);
     public record ChangeWelcomeMessageDto(string title_Eng,string title_Arb,string desc_Eng,string desc_Arb,string? marquee_Eng,string? maruee_Arb);
 }

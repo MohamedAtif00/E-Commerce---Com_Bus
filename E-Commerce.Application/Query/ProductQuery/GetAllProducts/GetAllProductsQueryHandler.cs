@@ -51,6 +51,11 @@ namespace E_Commerce.Application.Query.ProductQuery.GetAllProducts
                     productsQuery = productsQuery.Where(p => request.CategoryIds.Contains(p.categoryId));
                 }
 
+                if (request.totalReviews != null)
+                {
+                    productsQuery = productsQuery.Where(p => p._totalReviews == request.totalReviews);
+                }
+
                 Expression<Func<Product, object>> keySelector = request.sortColumn?.ToLower() switch
                 {
                     "name" => Product => Product._name,

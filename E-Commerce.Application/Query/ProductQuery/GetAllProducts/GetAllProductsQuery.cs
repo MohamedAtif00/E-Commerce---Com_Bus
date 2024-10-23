@@ -16,6 +16,7 @@ namespace E_Commerce.Application.Query.ProductQuery.GetAllProducts
                                       string? searchTerm,
                                       decimal? startPrice,
                                       decimal? endPrice,
+                                      decimal? totalReviews,
                                       List<CategoryId>? CategoryIds,
                                       bool asend = false
                                       ) :IQuery<PageList<Product>>;

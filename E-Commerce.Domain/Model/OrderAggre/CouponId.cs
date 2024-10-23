@@ -6,9 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace E_Commerce.Domain.Model.OrderAggre
 {
-    [EfCoreValueConverter(typeof(CouponConverter.CouponIdValueConverter))]
-    [JsonConverter(typeof(CouponConverter.CouponIdJsonConverter))]
-    [TypeConverter(typeof(CouponConverter.CouponIdTypeConverter))]
+
     public class CouponId : ValueObjectId, IValueObjectId<CouponId>
     {
         public CouponId(Guid id) : base(id)
