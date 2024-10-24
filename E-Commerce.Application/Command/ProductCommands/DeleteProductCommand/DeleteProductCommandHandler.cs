@@ -35,7 +35,8 @@ namespace E_Commerce.Application.Command.ProductCommands.DeleteProductCommand
                 }
                 // Delete master image
                 var masterImage = await _unitOfWork.ImageRepository.GetMasterImageByProductId(product.Id);
-                ImageHelper.DeleteImage(masterImage.Path,request.rootPath);
+                if(masterImage != null)
+                    ImageHelper.DeleteImage(masterImage.Path,request.rootPath);
 ;
 
                 await _unitOfWork.ProductRepository.Delete(product);
